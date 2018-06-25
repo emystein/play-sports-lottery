@@ -1,0 +1,12 @@
+gradle
+build
+logs
+target
+sbt-dist
+/.idea
+/.idea_modules
+/.classpath
+/.gradle
+/.project
+/.settings
+/RUNNING_PID
