@@ -2,7 +2,10 @@ package ar.com.flow.sportslottery.domain
 
 import java.util.Date
 
-case class GroupsPhase(groups: Set[Set[MatchEvent]]) {
+import scala.collection.mutable.MutableList
+
+class GroupsPhase(val groups: Set[Set[MatchEvent]]) {
+  def matchResults: MutableList[MatchResult] = MutableList.empty
 
   require(groups.map(group => differentMatchDaysForTheSameTeam(group)).forall(_ == true), "A team can't play two matches the same day")
 
@@ -16,6 +19,16 @@ case class GroupsPhase(groups: Set[Set[MatchEvent]]) {
     val lookupRivals = Set(team1, team2)
 
     groups.flatten.filter(matchEvent => Set(matchEvent.homeTeam, matchEvent.visitorTeam) == lookupRivals).headOption
+  }
+
+  def registerMatchResult(matchEvent: Option[MatchEvent], homeScore: Int, visitorScore: Int): Option[MatchResult] = {
+    if (matchEvent.isDefined) {
+      val result = new MatchResult(matchEvent.get, homeScore, visitorScore)
+      matchResults += result
+      Some(result)
+    } else {
+      None
+    }
   }
 }
 
