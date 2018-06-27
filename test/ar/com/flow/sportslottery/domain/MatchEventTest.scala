@@ -4,37 +4,33 @@ import java.util.Calendar
 
 import org.specs2.mutable.Specification
 
-class MatchEventTest extends Specification {
+class MatchEventTest extends Specification with TestObjects {
   "Create a Match Schedule" >> {
-     val group = Set("Argentina", "Iceland", "Croatia", "Nigeria")
-
-     val matchDate = new Calendar.Builder().setDate(2018, Calendar.JUNE, 25).build().getTime
-
     "Assign home and visitor" >> {
-      val matchEvent = new MatchEvent(group, "Argentina", "Nigeria", matchDate)
-
-      matchEvent.homeTeam must be equalTo "Argentina"
-      matchEvent.visitorTeam must be equalTo "Nigeria"
+      argentinaIcelandMatch.homeTeam must be equalTo "Argentina"
+      argentinaIcelandMatch.visitorTeam must be equalTo "Iceland"
     }
 
     "Assign date as separate year, month, day" >> {
-      val matchEvent = new MatchEvent(group, "Argentina", "Nigeria", 2018, 6, 25)
+      val matchEvent = new MatchEvent(groupA, "Argentina", "Nigeria", 2018, 6, 16)
 
-      matchEvent.date must be equalTo matchDate
+      val day3 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 16).build().getTime
+
+      matchEvent.date must be equalTo day3
     }
 
     "Home should be in the group" >> {
-      new MatchEvent(group, "Germany", "Iceland", matchDate) must
+      new MatchEvent(groupA, "Germany", "Iceland", day1) must
         throwA(new IllegalArgumentException("requirement failed: Home should be in the group"))
     }
 
     "Visitor should be in the group" >> {
-      new MatchEvent(group, "Argentina", "Germany", matchDate) must
+      new MatchEvent(groupA, "Argentina", "Germany", day1) must
         throwA(new IllegalArgumentException("requirement failed: Visitor should be in the group"))
     }
 
     "Home and visitor should be different teams" >> {
-      new MatchEvent(group, "Argentina", "Argentina", matchDate) must
+      new MatchEvent(groupA, "Argentina", "Argentina", day1) must
         throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
     }
 
