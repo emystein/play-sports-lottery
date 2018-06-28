@@ -5,7 +5,7 @@ import java.util.Date
 import scala.collection.mutable.MutableList
 
 class GroupsPhase(val groups: Set[Set[MatchEvent]]) {
-  def matchResults: MutableList[MatchResult] = MutableList.empty
+  val matchResults: MutableList[MatchResult] = MutableList.empty
 
   require(groups.map(group => differentMatchDaysForTheSameTeam(group)).forall(_ == true), "A team can't play two matches the same day")
 

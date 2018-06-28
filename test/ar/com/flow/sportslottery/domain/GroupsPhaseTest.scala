@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 
 class GroupsPhaseTest extends Specification with TestObjects {
 
-  "Groups phase creation" >> {
+  "Phase creation" >> {
     "Create a groups phase with two groups" >> {
       val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
       phase.groups must contain(===(groupAMatchSchedules))
@@ -21,26 +21,30 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
   }
 
-  "Group phase matches" >> {
+  "Match events" >> {
     val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
 
-    "Get a match event given teams in home and visitor order and date" >> {
+    "Get a match event given teams in home/visitor order" >> {
       val matchEvent = phase.getMatchEvent("Argentina", "Iceland")
 
-      matchEvent must be equalTo(Some(argentinaIcelandMatch))
+      matchEvent must be equalTo (Some(argentinaIcelandMatch))
     }
 
-    "Get a match event given teams in visitor and home order and date" >> {
-      val matchEvent = phase.getMatchEvent( "Iceland", "Argentina")
+    "Get a match event given teams in visitor/home order" >> {
+      val matchEvent = phase.getMatchEvent("Iceland", "Argentina")
 
-      matchEvent must be equalTo(Some(argentinaIcelandMatch))
+      matchEvent must be equalTo (Some(argentinaIcelandMatch))
     }
 
-    "Looking up a match event between teams that don't play against each other throws an exception" >> {
-      phase.getMatchEvent( "Germany", "Argentina") must be empty
+    "Get a match event between teams that don't belong to the same group must return Empty" >> {
+      phase.getMatchEvent("Germany", "Argentina") must be empty
     }
+  }
 
+  "Match results" >> {
     "Register a match result" >> {
+      val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+
       val matchEvent = phase.getMatchEvent("Argentina", "Nigeria")
 
       val maybeMatchResult = phase.registerMatchResult(matchEvent, 2, 1)
@@ -53,7 +57,10 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
 
     "Register a match result for a non existing match event should register None" >> {
+      val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+
       val matchResult = phase.registerMatchResult(None, 0, 0)
+
       matchResult should be none
     }
   }
