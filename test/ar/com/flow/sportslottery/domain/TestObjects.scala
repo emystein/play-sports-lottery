@@ -18,4 +18,7 @@ trait TestObjects {
   val moroccoIranMatch = new MatchEvent(groupB, "Morocco", "Iran", 2018, 6, 15)
   val groupBMatchSchedules = Set(egyptUruguayMatch, moroccoIranMatch)
 
+  val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, 1, 1)
+  val argentinaCroatiaMatchResult = new MatchResult(argentinaCroatiaMatch, 0, 3)
+  val argentinaNigeriaMatchResult = new MatchResult(argentinaNigeriaMatch, 2, 1)
 }

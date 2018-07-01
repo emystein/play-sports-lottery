@@ -2,11 +2,14 @@ package ar.com.flow.sportslottery.domain
 
 import org.specs2.mutable.Specification
 
+import scala.collection.mutable
+
 class GroupsPhaseTest extends Specification with TestObjects {
+  val allSchedules = Set(groupAMatchSchedules, groupBMatchSchedules)
 
   "Phase creation" >> {
     "Create a groups phase with two groups" >> {
-      val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+      val phase = new GroupsPhase(allSchedules)
       phase.groups must contain(===(groupAMatchSchedules))
       phase.groups must contain(===(groupBMatchSchedules))
     }
@@ -22,7 +25,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
   }
 
   "Match events" >> {
-    val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+    val phase = new GroupsPhase(allSchedules)
 
     "Get a match event given teams in home/visitor order" >> {
       val matchEvent = phase.getMatchEvent("Argentina", "Iceland")
@@ -43,7 +46,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
 
   "Match results" >> {
     "Register a match result" >> {
-      val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+      val phase = new GroupsPhase(allSchedules)
 
       val matchEvent = phase.getMatchEvent("Argentina", "Nigeria")
 
@@ -57,11 +60,56 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
 
     "Register a match result for a non existing match event should register None" >> {
-      val phase = new GroupsPhase(Set(groupAMatchSchedules, groupBMatchSchedules))
+      val phase = new GroupsPhase(allSchedules)
 
       val matchResult = phase.registerMatchResult(None, 0, 0)
 
-      matchResult should be none
+      matchResult must be none
     }
+  }
+
+  "Phase state" >> {
+    "When the phase begins all matches should be pending" >> {
+      val phase = new GroupsPhase(allSchedules)
+
+      phase.getPendingMatches() must be equalTo(allSchedules.flatten)
+    }
+
+    "After playing a match it shouldn't appear as pending" >> {
+      val phase = new GroupsPhase(allSchedules)
+
+      val matchEvent = phase.getMatchEvent("Argentina", "Nigeria")
+
+      phase.registerMatchResult(matchEvent, 2, 1)
+
+      phase.getPendingMatches() must not contain(matchEvent.get)
+    }
+
+//    "Get ranking for Group D first match" >> {
+//      val phase = new GroupsPhase(allSchedules)
+//
+//      var matchEvent = phase.getMatchEvent("Argentina", "Iceland")
+//      phase.registerMatchResult(matchEvent, 1, 1)
+//
+////      matchEvent = phase.getMatchEvent("Croatia", "Nigeria")
+////      phase.registerMatchResult(matchEvent, 2, 0)
+////
+////      matchEvent = phase.getMatchEvent("Argentina", "Croatia")
+////      phase.registerMatchResult(matchEvent, 0, 3)
+////
+////      matchEvent = phase.getMatchEvent("Nigeria", "Iceland")
+////      phase.registerMatchResult(matchEvent, 2, 0)
+////
+////      matchEvent = phase.getMatchEvent("Argentina", "Nigeria")
+////      phase.registerMatchResult(matchEvent, 2, 1)
+////
+////      matchEvent = phase.getMatchEvent("Croatia", "Iceland")
+////      phase.registerMatchResult(matchEvent, 2, 1)
+//
+//      val argentinaRank = new TeamRank(1, 0, 1, 0, 1, 1)
+//      val expectedRanking = new GroupRanking(argentinaRank, icelandRank, croatiaRank, nigeriaRank)
+//
+//      phase.groupRanking(groupAMatchSchedules) must be equalTo expectedRanking
+//    }
   }
 }

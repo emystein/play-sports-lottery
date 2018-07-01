@@ -2,9 +2,12 @@ package ar.com.flow.sportslottery.domain
 
 import java.util.Date
 
+import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
 class GroupsPhase(val groups: Set[Set[MatchEvent]]) {
+  val pendingMatches: mutable.Set[MatchEvent] = mutable.Set.empty ++= groups.flatten
+
   val matchResults: MutableList[MatchResult] = MutableList.empty
 
   require(groups.map(group => differentMatchDaysForTheSameTeam(group)).forall(_ == true), "A team can't play two matches the same day")
@@ -13,6 +16,10 @@ class GroupsPhase(val groups: Set[Set[MatchEvent]]) {
     val teamsWithMoreThanOneMatchTheSameDay = group.toSeq.flatMap(m => Seq(TeamDate(m.homeTeam, m.date), TeamDate(m.visitorTeam, m.date)))
                                                          .groupBy(identity).mapValues(_.size).filter(_._2 > 1)
     teamsWithMoreThanOneMatchTheSameDay.isEmpty
+  }
+
+  def getPendingMatches() : Set[MatchEvent] = {
+    pendingMatches.toSet
   }
 
   def getMatchEvent(team1: String, team2: String): Option[MatchEvent] = {
@@ -25,6 +32,7 @@ class GroupsPhase(val groups: Set[Set[MatchEvent]]) {
     if (matchEvent.isDefined) {
       val result = new MatchResult(matchEvent.get, homeScore, visitorScore)
       matchResults += result
+      pendingMatches -= matchEvent.get
       Some(result)
     } else {
       None
