@@ -1,6 +1,8 @@
 package ar.com.flow.sportslottery.domain
 
 class MatchResult(val event: MatchEvent, val homeScore: Int, val visitorScore: Int) {
+  def teams = Set(event.homeTeam, event.visitorTeam)
+
   val winner = {
     if (homeScore == visitorScore) {
       None
@@ -15,23 +17,27 @@ class MatchResult(val event: MatchEvent, val homeScore: Int, val visitorScore: I
     Set(homeResult(), visitorResult())
   }
 
+  def getTeamResult(team: String) = {
+    require(teams.contains(team), "Team should part of match")
+
+    teamResults.filter(_.team == team).head
+  }
+
   def homeResult(): TeamMatchResult = {
-    if (winner == None) {
-      TeamMatchResult(event.homeTeam, 1, homeScore, visitorScore)
-    } else if (winner == Some(event.homeTeam)) {
-      TeamMatchResult(event.homeTeam, 3, homeScore, visitorScore)
-    } else {
-      TeamMatchResult(event.homeTeam, 0, homeScore, visitorScore)
-    }
+    resultFor(event.homeTeam, homeScore, visitorScore)
   }
 
   def visitorResult(): TeamMatchResult = {
+    resultFor(event.visitorTeam, visitorScore, homeScore)
+  }
+
+  def resultFor(team: String, teamScore: Int, oponentScore: Int): TeamMatchResult = {
     if (winner == None) {
-      TeamMatchResult(event.visitorTeam, 1, visitorScore, homeScore)
-    } else if (winner == Some(event.homeTeam)) {
-      TeamMatchResult(event.visitorTeam, 0, visitorScore, homeScore)
+      TeamMatchResult(team, 1, teamScore, oponentScore)
+    } else if (winner == Some(team)) {
+      TeamMatchResult(team, 3, teamScore, oponentScore)
     } else {
-      TeamMatchResult(event.visitorTeam, 3, visitorScore, homeScore)
+      TeamMatchResult(team, 0, teamScore, oponentScore)
     }
   }
 }

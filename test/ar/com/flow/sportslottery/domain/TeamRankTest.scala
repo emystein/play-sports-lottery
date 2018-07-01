@@ -2,50 +2,60 @@ package ar.com.flow.sportslottery.domain
 
 import org.specs2.mutable.Specification
 
+import scala.util.Sorting
+
 class TeamRankTest extends Specification with TestObjects {
-  "Can't record result in rank for a different team" >> {
-    val croatiaRank = new TeamRank("Crotia")
-    val argentinaIcelandMatch = new MatchEvent(Set("Argentina", "Iceland", "Croatia", "Nigeria"), "Argentina", "Iceland", 2018, 6, 16)
-    val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, 1, 1)
+  "Can't add result to rank for a different team" >> {
+    val croatiaRank = new TeamRank("Croatia")
 
-    croatiaRank.recordMatchResult(argentinaIcelandMatchResult) must throwA(new IllegalArgumentException("requirement failed: Match result should correspond to team"))
+    croatiaRank.addMatchResult(argentinaIcelandMatchResult) must
+      throwA(new IllegalArgumentException("requirement failed: Match result should correspond to team"))
   }
 
-  "Add deuce result to rank" >> {
+  "Sum match results" >> {
     val argentinaRank = new TeamRank("Argentina")
 
-    argentinaRank.recordMatchResult(argentinaIcelandMatchResult)
-
-    argentinaRank.points must be equalTo 1
-  }
-
-  "Add loose result to rank" >> {
-    val argentinaRank = new TeamRank("Argentina")
-
-    argentinaRank.recordMatchResult(argentinaCroatiaMatchResult)
-
-    argentinaRank.points must be equalTo 0
-  }
-
-  "Add win result to rank" >> {
-    val argentinaRank = new TeamRank("Argentina")
-
-    argentinaRank.recordMatchResult(argentinaNigeriaMatchResult)
-
-    argentinaRank.points must be equalTo 3
-  }
-
-  "Sum results" >> {
-    val argentinaRank = new TeamRank("Argentina")
-
-    argentinaRank.recordMatchResult(argentinaIcelandMatchResult)
-    argentinaRank.recordMatchResult(argentinaCroatiaMatchResult)
-    argentinaRank.recordMatchResult(argentinaNigeriaMatchResult)
+    argentinaRank.addMatchResult(argentinaIcelandMatchResult)
+    argentinaRank.addMatchResult(argentinaCroatiaMatchResult)
+    argentinaRank.addMatchResult(argentinaNigeriaMatchResult)
 
     val argentinaPoints = argentinaIcelandMatchResult.homeResult().points +
                           argentinaCroatiaMatchResult.homeResult().points +
                           argentinaNigeriaMatchResult.homeResult().points
 
+    argentinaRank.matchesPlayed must be equalTo 3
     argentinaRank.points must be equalTo argentinaPoints
+  }
+
+  "Order" >> {
+    "Won matches goes first" >> {
+      val ranks = Array(argentinaRank, croatiaRank)
+
+      Sorting.quickSort(ranks)
+
+      ranks must be equalTo Array(croatiaRank, argentinaRank)
+    }
+
+    "When teams have same match points then goals difference goes first" >> {
+      val asiaGroup = Set("China", "Jakarta", "Kamchatka")
+
+      val jakartaChinaMatch = new MatchEvent(asiaGroup, "Jakarta", "China", 2019, 1, 1)
+      val jakartaChinaMatchResult = new MatchResult(jakartaChinaMatch, 0, 1)
+
+      val jakartaKamchatkaMatch = new MatchEvent(asiaGroup, "Jakarta", "Kamchatka", 2019, 1, 1)
+      val jakartaKamchatkaMatchResult = new MatchResult(jakartaKamchatkaMatch, 1, 3)
+
+      val chinaRank = new TeamRank("China")
+      chinaRank.addMatchResult(jakartaChinaMatchResult)
+
+      val kamchatkaRank = new TeamRank("Kamchatka")
+      kamchatkaRank.addMatchResult(jakartaKamchatkaMatchResult)
+
+      val ranks = Array(chinaRank, kamchatkaRank)
+
+      Sorting.quickSort(ranks)
+
+      ranks must be equalTo Array(kamchatkaRank, chinaRank)
+    }
   }
 }
