@@ -83,13 +83,15 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
   }
 
-//  "Phase ranking" >> {
-//    "Add a match result must update both teams rank" >> {
-//      val phase = new GroupsPhase(allSchedules)
-//
-//      phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
-//
-//      phase.getGroupRanking("A")
-//    }
-//  }
+  "Phase ranking" >> {
+    "Add a match result must update both teams rank" >> {
+      val phase = new GroupsPhase(allSchedules)
+
+      phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
+
+      val groupRanking = phase.getGroupRanking("A")
+
+      groupRanking.map(_.team) must be equalTo List("Croatia", "Argentina", "Iceland", "Nigeria")
+    }
+  }
 }

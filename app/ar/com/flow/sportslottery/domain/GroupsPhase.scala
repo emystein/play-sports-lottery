@@ -2,13 +2,19 @@ package ar.com.flow.sportslottery.domain
 
 import java.util.Date
 
+import com.google.common.collect.LinkedHashMultimap
+
 import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
 class GroupsPhase(val groups: Set[Group]) {
   val pendingMatches: mutable.Set[MatchSchedule] = mutable.Set.empty ++= groups.flatMap(_.matchSchedules)
-
   val matchResults: MutableList[MatchResult] = MutableList.empty
+
+  val teamsByGroup = groups.map(g => g.name -> g.matchSchedules.map(s => Seq(s.homeTeam, s.visitorTeam)).flatten).toMap
+
+  val teamRanks = groups.flatMap(_.matchSchedules).map(s => Seq(s.homeTeam -> new TeamRank(s.homeTeam),
+                                                                s.visitorTeam -> new TeamRank(s.visitorTeam))).flatten.toMap
 
   require(groups.map(group => differentMatchDaysForTheSameTeam(group.matchSchedules)).forall(_ == true), "A team can't play two matches the same day")
 
@@ -37,11 +43,18 @@ class GroupsPhase(val groups: Set[Group]) {
     matchResults += result
     pendingMatches -= matchSchedule
 
+    teamRanks(matchSchedule.homeTeam).addMatchResult(result)
+    teamRanks(matchSchedule.visitorTeam).addMatchResult(result)
+
     result
   }
 
   def matchHasBeenScheduled(matchSchedule: MatchSchedule): Boolean = {
     groups.flatMap(_.matchSchedules).contains(matchSchedule)
+  }
+
+  def getGroupRanking(groupName: String): List[TeamRank] = {
+    teamsByGroup.getOrElse(groupName, Seq.empty).map(teamRanks(_)).toList.sorted
   }
 }
 
