@@ -1,6 +1,6 @@
 package ar.com.flow.sportslottery.domain
 
-class MatchResult(val event: MatchEvent, val homeScore: Int, val visitorScore: Int) {
+class MatchResult(val event: MatchSchedule, val homeScore: Int, val visitorScore: Int) {
   def teams = Set(event.homeTeam, event.visitorTeam)
 
   val winner = {

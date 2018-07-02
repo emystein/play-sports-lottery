@@ -7,18 +7,21 @@ trait TestObjects {
   val day2 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 15).build().getTime
   val day3 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 16).build().getTime
 
+  val notWorldCupGroup = Set("China", "Jakarta", "Kamchatka")
+  val notWorldCupMatch = new MatchSchedule(notWorldCupGroup, "Jakarta", "China", 2019, 1, 1)
+
   val groupA = Set("Argentina", "Iceland", "Croatia", "Nigeria")
-  val argentinaIcelandMatch = new MatchEvent(groupA, "Argentina", "Iceland", 2018, 6, 16)
-  val croatiaNigeriaMatch = new MatchEvent(groupA, "Croatia", "Nigeria", 2018, 6, 16)
-  val argentinaCroatiaMatch = new MatchEvent(groupA, "Argentina", "Croatia", 2018, 6, 21)
-  val argentinaNigeriaMatch = new MatchEvent(groupA, "Argentina", "Nigeria", 2018, 6, 26)
-  val icelandCroatiaMatch = new MatchEvent(groupA, "Iceland", "Croatia", 2018, 6, 26)
-  val groupAMatchSchedules = Set(croatiaNigeriaMatch, argentinaIcelandMatch, argentinaCroatiaMatch, argentinaNigeriaMatch)
+  val argentinaIcelandMatch = new MatchSchedule(groupA, "Argentina", "Iceland", 2018, 6, 16)
+  val croatiaNigeriaMatch = new MatchSchedule(groupA, "Croatia", "Nigeria", 2018, 6, 16)
+  val argentinaCroatiaMatch = new MatchSchedule(groupA, "Argentina", "Croatia", 2018, 6, 21)
+  val argentinaNigeriaMatch = new MatchSchedule(groupA, "Argentina", "Nigeria", 2018, 6, 26)
+  val icelandCroatiaMatch = new MatchSchedule(groupA, "Iceland", "Croatia", 2018, 6, 26)
+  val groupAMatchSchedules = Group("A", Set(croatiaNigeriaMatch, argentinaIcelandMatch, argentinaCroatiaMatch, argentinaNigeriaMatch))
 
   val groupB = Set("Egypt", "Uruguay", "Morocco", "Iran")
-  val egyptUruguayMatch = new MatchEvent(groupB, "Egypt", "Uruguay", 2018, 6, 15)
-  val moroccoIranMatch = new MatchEvent(groupB, "Morocco", "Iran", 2018, 6, 15)
-  val groupBMatchSchedules = Set(egyptUruguayMatch, moroccoIranMatch)
+  val egyptUruguayMatch = new MatchSchedule(groupB, "Egypt", "Uruguay", 2018, 6, 15)
+  val moroccoIranMatch = new MatchSchedule(groupB, "Morocco", "Iran", 2018, 6, 15)
+  val groupBMatchSchedules = Group("B", Set(egyptUruguayMatch, moroccoIranMatch))
 
   val croatiaNigeriaMatchResult = new MatchResult(croatiaNigeriaMatch, 2, 0)
   val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, 1, 1)
