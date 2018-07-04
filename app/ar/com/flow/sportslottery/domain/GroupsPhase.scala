@@ -31,20 +31,17 @@ class GroupsPhase(val groups: Set[Group]) {
   def getMatchSchedule(team1: String, team2: String): Option[MatchSchedule] = {
     val lookupRivals = Set(team1, team2)
 
-    groups.flatMap(_.matchSchedules)
-      .filter(matchSchedule => Set(matchSchedule.homeTeam, matchSchedule.visitorTeam) == lookupRivals).headOption
+    groups.flatMap(_.matchSchedules).filter(_.teams == lookupRivals).headOption
   }
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): MatchResult = {
     require(matchHasBeenScheduled(matchSchedule), "Can't add a result for a match that wasn't scheduled")
 
     val result = new MatchResult(matchSchedule, homeScore, visitorScore)
+    matchSchedule.teams.map(team => teamRanks(team)).foreach(rank => rank.addMatchResult(result))
 
     matchResults += result
     pendingMatches -= matchSchedule
-
-    teamRanks(matchSchedule.homeTeam).addMatchResult(result)
-    teamRanks(matchSchedule.visitorTeam).addMatchResult(result)
 
     result
   }

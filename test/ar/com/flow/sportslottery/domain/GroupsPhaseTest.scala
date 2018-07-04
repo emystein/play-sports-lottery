@@ -5,18 +5,18 @@ import org.specs2.mutable.Specification
 import scala.collection.mutable
 
 class GroupsPhaseTest extends Specification with TestObjects {
-  val allSchedules = Set(groupAMatchSchedules, groupBMatchSchedules)
+  val allSchedules = Set(groupDMatchSchedules, groupAMatchSchedules)
 
   "Phase creation" >> {
     "Create a groups phase with two groups" >> {
       val phase = new GroupsPhase(allSchedules)
+      phase.groups must contain(===(groupDMatchSchedules))
       phase.groups must contain(===(groupAMatchSchedules))
-      phase.groups must contain(===(groupBMatchSchedules))
     }
 
     "A team can't play two matches the same day" >> {
-      val argentinaIcelandMatch = new MatchSchedule(groupA, "Argentina", "Iceland", day1)
-      val argentinaCroatiaMatch = new MatchSchedule(groupA, "Argentina", "Croatia", day1)
+      val argentinaIcelandMatch = new MatchSchedule(groupD, "Argentina", "Iceland", day1)
+      val argentinaCroatiaMatch = new MatchSchedule(groupD, "Argentina", "Croatia", day1)
 
       val group = Group("A", Set(argentinaIcelandMatch, argentinaCroatiaMatch))
 
@@ -24,7 +24,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
   }
 
-  "Match events" >> {
+  "Match schedules" >> {
     val phase = new GroupsPhase(allSchedules)
 
     "Get a match event given teams in home/visitor order" >> {
@@ -89,7 +89,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
 
       phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
 
-      val groupRanking = phase.getGroupRanking("A")
+      val groupRanking = phase.getGroupRanking("D")
 
       groupRanking.map(_.team) must be equalTo List("Croatia", "Argentina", "Iceland", "Nigeria")
     }

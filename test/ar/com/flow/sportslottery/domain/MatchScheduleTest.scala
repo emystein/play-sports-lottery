@@ -12,7 +12,7 @@ class MatchScheduleTest extends Specification with TestObjects {
     }
 
     "Assign date as separate year, month, day" >> {
-      val matchEvent = new MatchSchedule(groupA, "Argentina", "Nigeria", 2018, 6, 16)
+      val matchEvent = new MatchSchedule(groupD, "Argentina", "Nigeria", 2018, 6, 16)
 
       val day3 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 16).build().getTime
 
@@ -20,17 +20,17 @@ class MatchScheduleTest extends Specification with TestObjects {
     }
 
     "Home should be in the group" >> {
-      new MatchSchedule(groupA, "Germany", "Iceland", day1) must
+      new MatchSchedule(groupD, "Germany", "Iceland", day1) must
         throwA(new IllegalArgumentException("requirement failed: Home should be in the group"))
     }
 
     "Visitor should be in the group" >> {
-      new MatchSchedule(groupA, "Argentina", "Germany", day1) must
+      new MatchSchedule(groupD, "Argentina", "Germany", day1) must
         throwA(new IllegalArgumentException("requirement failed: Visitor should be in the group"))
     }
 
     "Home and visitor should be different teams" >> {
-      new MatchSchedule(groupA, "Argentina", "Argentina", day1) must
+      new MatchSchedule(groupD, "Argentina", "Argentina", day1) must
         throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
     }
 

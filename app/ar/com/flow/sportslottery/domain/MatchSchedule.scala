@@ -8,6 +8,9 @@ class MatchSchedule(val group: Set[String], val homeTeam: String, val visitorTea
   require(group.contains(visitorTeam), "Visitor should be in the group")
 
   def this(group: Set[String], homeTeam: String, visitorTeam: String, year: Int, month: Int, day: Int) {
+    // TODO: use Java 8 date API
     this(group, homeTeam, visitorTeam, new Calendar.Builder().setDate(year, month - 1, day).build().getTime)
   }
+
+  val teams = Set(homeTeam, visitorTeam)
 }
