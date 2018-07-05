@@ -5,4 +5,13 @@ class GroupsPhaseMetadata(val groups: Set[Group]) {
   val teams = teamsByGroup.values.flatten
   val scheduledMatches: Set[MatchSchedule] = groups.flatMap(_.matchSchedules)
 
+  require(GroupsPhasePreconditions.onlyOneMatchPerDayForEachTeam(scheduledMatches), "A team can't play two matches the same day")
+
+  def getMatchSchedule(team1: String, team2: String): Option[MatchSchedule] = {
+    scheduledMatches.find(_.teams == Set(team1, team2))
+  }
+
+  def matchHasBeenScheduled(matchSchedule: MatchSchedule): Boolean = {
+    scheduledMatches.contains(matchSchedule)
+  }
 }
