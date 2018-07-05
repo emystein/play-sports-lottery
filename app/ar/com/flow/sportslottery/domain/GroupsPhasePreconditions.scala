@@ -1,5 +1,7 @@
 package ar.com.flow.sportslottery.domain
 
+import java.time.LocalDate
+
 object GroupsPhasePreconditions {
   def onlyOneMatchPerDayForEachTeam(matchSchedules: Set[MatchSchedule]): Boolean = {
     val teamsWithMoreThanOneMatchTheSameDay = matchSchedules.toSeq
@@ -8,3 +10,5 @@ object GroupsPhasePreconditions {
     teamsWithMoreThanOneMatchTheSameDay.isEmpty
   }
 }
+
+case class TeamDate(team: String, date: LocalDate)

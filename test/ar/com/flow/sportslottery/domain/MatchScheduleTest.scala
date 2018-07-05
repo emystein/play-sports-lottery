@@ -1,7 +1,5 @@
 package ar.com.flow.sportslottery.domain
 
-import java.util.Calendar
-
 import org.specs2.mutable.Specification
 
 class MatchScheduleTest extends Specification with TestObjects {
@@ -13,8 +11,6 @@ class MatchScheduleTest extends Specification with TestObjects {
 
     "Assign date as separate year, month, day" >> {
       val matchEvent = new MatchSchedule(groupD, "Argentina", "Nigeria", 2018, 6, 16)
-
-      val day3 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 16).build().getTime
 
       matchEvent.date must be equalTo day3
     }

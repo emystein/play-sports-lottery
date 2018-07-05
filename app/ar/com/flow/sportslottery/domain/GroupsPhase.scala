@@ -1,7 +1,5 @@
 package ar.com.flow.sportslottery.domain
 
-import java.util.Date
-
 import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
@@ -29,4 +27,3 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
   }
 }
 
-case class TeamDate(team: String, date: Date)

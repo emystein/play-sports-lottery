@@ -1,11 +1,12 @@
 package ar.com.flow.sportslottery.domain
 
+import java.time.{LocalDate, MonthDay}
 import java.util.Calendar
 
 trait TestObjects {
-  val day1 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 14).build().getTime
-  val day2 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 15).build().getTime
-  val day3 = new Calendar.Builder().setDate(2018, Calendar.JUNE, 16).build().getTime
+  val day1 = LocalDate.of(2018, 6, 14)
+  val day2 = LocalDate.of(2018, 6, 15)
+  val day3 = LocalDate.of(2018, 6, 16)
 
   val notWorldCupGroup = Set("China", "Jakarta", "Kamchatka")
   val notWorldCupMatch = new MatchSchedule(notWorldCupGroup, "Jakarta", "China", 2019, 1, 1)
