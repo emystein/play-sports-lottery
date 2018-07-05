@@ -1,7 +1,14 @@
 package ar.com.flow.sportslottery.domain
 
-class MatchResult(val event: MatchSchedule, val homeScore: Int, val visitorScore: Int) {
+import scala.collection.mutable.MutableList
+
+class MatchResult(val event: MatchSchedule, val homeScore: Int, val visitorScore: Int)(implicit matchResults: MutableList[MatchResult] = MutableList.empty, teamRanks: Map[String, TeamRank] = Map.empty) {
   def teams = Set(event.homeTeam, event.visitorTeam)
+
+  matchResults += this
+
+  teams.map(team => teamRanks.getOrElse(team, new TeamRank(team)))
+                      .foreach(rank => rank.addMatchResult(this))
 
   val winner = {
     if (homeScore == visitorScore) {
