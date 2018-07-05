@@ -9,11 +9,9 @@ class GroupsPhase(val groups: Set[Group]) {
   require(GroupsPhasePreconditions.everyTeamPlaysOnlyOneMatchTheSameDay(groups), "A team can't play two matches the same day")
 
   val metadata = new GroupsPhaseMetadata(groups)
-  val scheduledMatches = metadata.scheduledMatches
-  val teamsByGroup = metadata.teamsByGroup
 
   // mutable
-  val pendingMatches: mutable.Set[MatchSchedule] = mutable.Set.empty ++= scheduledMatches
+  val pendingMatches: mutable.Set[MatchSchedule] = mutable.Set.empty ++= metadata.scheduledMatches
   val matchResults: MutableList[MatchResult] = MutableList.empty
   val teamRanks = metadata.teams.map(team => team -> new TeamRank(team)).toMap
 
@@ -24,7 +22,7 @@ class GroupsPhase(val groups: Set[Group]) {
   def getMatchSchedule(team1: String, team2: String): Option[MatchSchedule] = {
     val lookupRivals = Set(team1, team2)
 
-    scheduledMatches.filter(_.teams == lookupRivals).headOption
+    metadata.scheduledMatches.filter(_.teams == lookupRivals).headOption
   }
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): MatchResult = {
@@ -36,11 +34,11 @@ class GroupsPhase(val groups: Set[Group]) {
   }
 
   def matchHasBeenScheduled(matchSchedule: MatchSchedule): Boolean = {
-    scheduledMatches.contains(matchSchedule)
+    metadata.scheduledMatches.contains(matchSchedule)
   }
 
   def getGroupRanking(groupName: String): List[TeamRank] = {
-    teamsByGroup(groupName).map(teamRanks(_)).toList.sorted
+    metadata.teamsByGroup(groupName).map(teamRanks(_)).toList.sorted
   }
 }
 
