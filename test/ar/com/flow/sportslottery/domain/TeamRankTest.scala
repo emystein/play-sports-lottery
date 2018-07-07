@@ -19,9 +19,9 @@ class TeamRankTest extends Specification with TestObjects {
     argentinaRank.addMatchResult(argentinaCroatiaMatchResult)
     argentinaRank.addMatchResult(argentinaNigeriaMatchResult)
 
-    val argentinaPoints = argentinaIcelandMatchResult.homeResult().points +
-                          argentinaCroatiaMatchResult.homeResult().points +
-                          argentinaNigeriaMatchResult.homeResult().points
+    val argentinaPoints = argentinaIcelandMatchResult.forTeam("Argentina").points +
+                          argentinaCroatiaMatchResult.forTeam("Argentina").points +
+                          argentinaNigeriaMatchResult.forTeam("Argentina").points
 
     argentinaRank.matchesPlayed must be equalTo 3
     argentinaRank.points must be equalTo argentinaPoints

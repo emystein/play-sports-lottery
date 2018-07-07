@@ -11,7 +11,7 @@ class TeamRank(val team: String) extends Ordered[TeamRank] {
 
     matchesPlayed += 1
 
-    val teamResult = matchResult.getTeamResult(team)
+    val teamResult = matchResult.forTeam(team)
 
     goalsFavor += teamResult.goalsFavor
     goalsAgainst += teamResult.goalsAgainst
