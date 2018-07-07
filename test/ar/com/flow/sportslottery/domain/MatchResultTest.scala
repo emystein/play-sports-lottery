@@ -23,12 +23,12 @@ class MatchResultTest extends Specification with TestObjects {
       argentinaNigeriaMatchResult.winner must be equalTo Some("Argentina")
       argentinaNigeriaMatchResult.homeScore should be equalTo 2
       argentinaNigeriaMatchResult.visitorScore should be equalTo 1
-      argentinaNigeriaMatchResult.teamResults must be equalTo Set(TeamMatchResult("Argentina", 3, 2, 1), TeamMatchResult("Nigeria", 0, 1, 2))
+      argentinaNigeriaMatchResult.teamResults must be equalTo Set(TeamMatchResult("Argentina", 2, 1), TeamMatchResult("Nigeria", 1, 2))
     }
 
     "Register a deuce" >> {
       argentinaIcelandMatchResult.winner must be equalTo None
-      argentinaIcelandMatchResult.teamResults must be equalTo Set(TeamMatchResult("Argentina", 1, 1, 1), TeamMatchResult("Iceland", 1, 1, 1))
+      argentinaIcelandMatchResult.teamResults must be equalTo Set(TeamMatchResult("Argentina", 1, 1), TeamMatchResult("Iceland", 1, 1))
     }
   }
 }

@@ -2,26 +2,17 @@ package ar.com.flow.sportslottery.domain
 
 import scala.collection.mutable.MutableList
 
-class MatchResult(val event: MatchSchedule, val homeScore: Int, val visitorScore: Int)(implicit matchResults: MutableList[MatchResult] = MutableList.empty, teamRanks: Map[String, TeamRank] = Map.empty) {
-  def teams = Set(event.homeTeam, event.visitorTeam)
+class MatchResult(val matchSchedule: MatchSchedule, val homeScore: Int, val visitorScore: Int)(implicit matchResults: MutableList[MatchResult] = MutableList.empty, teamRanks: Map[String, TeamRank] = Map.empty) {
+  def teams = Set(matchSchedule.homeTeam, matchSchedule.visitorTeam)
 
   matchResults += this
 
   teams.map(team => teamRanks.getOrElse(team, new TeamRank(team)))
                       .foreach(rank => rank.addMatchResult(this))
 
-  val winner = {
-    if (homeScore == visitorScore) {
-      None
-    } else if (homeScore > visitorScore) {
-      Some(event.homeTeam)
-    } else {
-      Some(event.visitorTeam)
-    }
-  }
-
   def teamResults: Set[TeamMatchResult] = {
-    Set(homeResult(), visitorResult())
+    Set(resultFor(TeamScore(matchSchedule.homeTeam, homeScore), visitorScore),
+        resultFor(TeamScore(matchSchedule.visitorTeam, visitorScore), homeScore))
   }
 
   def getTeamResult(team: String) = {
@@ -31,20 +22,32 @@ class MatchResult(val event: MatchSchedule, val homeScore: Int, val visitorScore
   }
 
   def homeResult(): TeamMatchResult = {
-    resultFor(event.homeTeam, homeScore, visitorScore)
+    resultFor(matchSchedule.homeTeam)
   }
 
   def visitorResult(): TeamMatchResult = {
-    resultFor(event.visitorTeam, visitorScore, homeScore)
+    resultFor(matchSchedule.visitorTeam)
   }
 
-  def resultFor(team: String, teamScore: Int, oponentScore: Int): TeamMatchResult = {
-    if (winner == None) {
-      TeamMatchResult(team, 1, teamScore, oponentScore)
-    } else if (winner == Some(team)) {
-      TeamMatchResult(team, 3, teamScore, oponentScore)
+  def resultFor(team: String): TeamMatchResult = {
+    teamResults.find(_.team == team).get
+  }
+
+  def resultFor(teamScore: TeamScore, oponentScore: Int): TeamMatchResult = {
+    TeamMatchResult(teamScore.team, teamScore.score, oponentScore)
+  }
+
+  val winner = winnerOf(matchSchedule, homeScore, visitorScore)
+
+  def winnerOf(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int) = {
+    if (homeScore == visitorScore) {
+      None
+    } else if (homeScore > visitorScore) {
+      Some(matchSchedule.homeTeam)
     } else {
-      TeamMatchResult(team, 0, teamScore, oponentScore)
+      Some(matchSchedule.visitorTeam)
     }
   }
 }
+
+case class TeamScore(team: String, score: Int)

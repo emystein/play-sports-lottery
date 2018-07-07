@@ -2,6 +2,8 @@ package ar.com.flow.sportslottery.domain
 
 import org.specs2.mutable.Specification
 
+import scala.collection.mutable
+
 class GroupsPhaseTest extends Specification with TestObjects {
   val allSchedules = Set(groupDMatchSchedules, groupAMatchSchedules)
   val groupsPhaseMetadata = new GroupsPhaseMetadata(allSchedules)
@@ -31,7 +33,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
     "When the phase begins all matches should be pending" >> {
       val phase = new GroupsPhase(groupsPhaseMetadata)
 
-      phase.getPendingMatches() must be equalTo(allSchedules.flatMap(_.matchSchedules))
+      phase.pendingMatches must be equalTo(allSchedules.flatMap(_.matchSchedules).to[mutable.Set])
     }
 
     "After playing a match it shouldn't appear as pending" >> {
@@ -41,7 +43,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
 
       phase.addMatchResult(maybeMatchSchedule.get, 2, 1)
 
-      phase.getPendingMatches() must not contain(maybeMatchSchedule.get)
+      phase.pendingMatches must not contain(maybeMatchSchedule.get)
     }
   }
 

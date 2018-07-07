@@ -7,12 +7,8 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
   val teamRanks = metadata.teams.map(team => team -> new TeamRank(team)).toMap
 
   // mutable
-  val pendingMatches: mutable.Set[MatchSchedule] = mutable.Set.empty ++= metadata.scheduledMatches
+  val pendingMatches: mutable.Set[MatchSchedule] = metadata.scheduledMatches.to[mutable.Set]
   val matchResults: MutableList[MatchResult] = MutableList.empty
-
-  def getPendingMatches(): Set[MatchSchedule] = {
-    pendingMatches.toSet
-  }
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): MatchResult = {
     require(metadata.matchHasBeenScheduled(matchSchedule), "Can't add a result for a match that wasn't scheduled")
