@@ -1,21 +1,12 @@
 package ar.com.flow.sportslottery.domain
 
-import scala.collection.mutable.MutableList
-
-class MatchResult(val matchSchedule: MatchSchedule, val homeGoals: Int, val visitorGoals: Int)(implicit matchResults: MutableList[MatchResult] = MutableList.empty, teamRanks: Map[String, TeamRank] = Map.empty) {
-  def teams = Set(matchSchedule.homeTeam, matchSchedule.visitorTeam)
-
-  val homeScore = TeamScore(matchSchedule.homeTeam, homeGoals)
-  val visitorScore = TeamScore(matchSchedule.visitorTeam, visitorGoals)
-
-  matchResults += this
-
-  teams.map(team => teamRanks.getOrElse(team, new TeamRank(team)))
-    .foreach(rank => rank.addMatchResult(this))
-
-  def teamScores: Set[TeamScore] = Set(homeScore, visitorScore)
-
+class MatchResult(val matchSchedule: MatchSchedule, val homeScore: TeamScore, val visitorScore: TeamScore)(implicit teamRanks: Map[String, TeamRank] = Map.empty) {
+  matchSchedule.teams.map(team => teamRanks.getOrElse(team, new TeamRank(team)))
+                     .foreach(rank => rank.addMatchResult(this))
+  
   def forTeam: Map[String, TeamMatchResult] = {
+    val teamScores = Set(homeScore, visitorScore)
+
     val result = for {
       teamScore1 <- teamScores
       teamScore2 <- teamScores

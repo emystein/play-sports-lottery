@@ -46,11 +46,11 @@ trait TestObjects {
   val icelandCroatiaMatch = new MatchSchedule(groupD, "Iceland", "Croatia", 2018, 6, 26)
   val groupDMatchSchedules = Group("D", Set(croatiaNigeriaMatch, argentinaIcelandMatch, argentinaCroatiaMatch, argentinaNigeriaMatch))
 
-  val croatiaNigeriaMatchResult = new MatchResult(croatiaNigeriaMatch, 2, 0)
-  val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, 1, 1)
-  val argentinaCroatiaMatchResult = new MatchResult(argentinaCroatiaMatch, 0, 3)
-  val argentinaNigeriaMatchResult = new MatchResult(argentinaNigeriaMatch, 2, 1)
-  val icelandCroatiaMatchResult = new MatchResult(icelandCroatiaMatch, 1, 2)
+  val croatiaNigeriaMatchResult = new MatchResult(croatiaNigeriaMatch, TeamScore("Croatia", 2), TeamScore("Nigeria", 0))
+  val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, TeamScore("Argentina", 1), TeamScore("Iceland", 1))
+  val argentinaCroatiaMatchResult = new MatchResult(argentinaCroatiaMatch, TeamScore("Argentina", 0), TeamScore("Croatia", 3))
+  val argentinaNigeriaMatchResult = new MatchResult(argentinaNigeriaMatch, TeamScore("Argentina", 2), TeamScore("Nigeria", 1))
+  val icelandCroatiaMatchResult = new MatchResult(icelandCroatiaMatch, TeamScore("Iceland", 1), TeamScore("Croatia", 2))
 
 
   val argentinaRank = new TeamRank("Argentina")

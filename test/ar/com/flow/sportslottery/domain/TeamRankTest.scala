@@ -40,10 +40,10 @@ class TeamRankTest extends Specification with TestObjects {
       val asiaGroup = Set("China", "Jakarta", "Kamchatka")
 
       val jakartaChinaMatch = new MatchSchedule(asiaGroup, "Jakarta", "China", 2019, 1, 1)
-      val jakartaChinaMatchResult = new MatchResult(jakartaChinaMatch, 0, 1)
+      val jakartaChinaMatchResult = new MatchResult(jakartaChinaMatch, TeamScore("Jakarta", 0), TeamScore("China", 1))
 
       val jakartaKamchatkaMatch = new MatchSchedule(asiaGroup, "Jakarta", "Kamchatka", 2019, 1, 1)
-      val jakartaKamchatkaMatchResult = new MatchResult(jakartaKamchatkaMatch, 1, 3)
+      val jakartaKamchatkaMatchResult = new MatchResult(jakartaKamchatkaMatch, TeamScore("Jakarta", 1), TeamScore("Kamchatka", 3))
 
       val chinaRank = new TeamRank("China")
       chinaRank.addMatchResult(jakartaChinaMatchResult)

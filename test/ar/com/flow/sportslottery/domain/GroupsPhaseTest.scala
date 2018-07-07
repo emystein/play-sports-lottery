@@ -17,8 +17,6 @@ class GroupsPhaseTest extends Specification with TestObjects {
       val matchResult = phase.addMatchResult(matchSchedule.get, 2, 1)
 
       phase.matchResults must contain(matchResult)
-      matchResult.homeGoals must be equalTo 2
-      matchResult.visitorGoals must be equalTo 1
     }
 
     "Can't add a match result for a match that wasn't scheduled" >> {
