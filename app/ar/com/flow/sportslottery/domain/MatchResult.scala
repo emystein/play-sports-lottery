@@ -20,12 +20,12 @@ class MatchResult(val matchSchedule: MatchSchedule, val homeGoals: Int, val visi
       teamScore1 <- teamScores
       teamScore2 <- teamScores
       if teamScore1 != teamScore2
-    } yield teamScore1.team -> resultFor(teamScore1, teamScore2)
+    } yield teamScore1.team -> resultBasedOnScores(teamScore1, teamScore2)
 
     result.toMap
   }
 
-  def resultFor(teamScore: TeamScore, oponentScore: TeamScore): TeamMatchResult = {
+  private def resultBasedOnScores(teamScore: TeamScore, oponentScore: TeamScore): TeamMatchResult = {
     TeamMatchResult(teamScore.team, teamScore.score, oponentScore.score)
   }
 
@@ -38,5 +38,3 @@ class MatchResult(val matchSchedule: MatchSchedule, val homeGoals: Int, val visi
       Some(matchSchedule.visitorTeam)
     }
 }
-
-case class TeamScore(team: String, score: Int)
