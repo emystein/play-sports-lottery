@@ -7,7 +7,7 @@ class TeamRank(val team: String) extends Ordered[TeamRank] {
   var points: Int = 0
 
   def addMatchResult(matchResult: MatchResult) {
-    require(matchResult.matchSchedule.teams.contains(team), "Match result should correspond to team")
+    require(matchResult.teams.contains(team), "Match result should correspond to team")
 
     matchesPlayed += 1
 
