@@ -18,20 +18,5 @@ class MatchScheduleTest extends Specification with TestObjects {
 
       matchEvent.date must be equalTo day3
     }
-
-    "Home should be in the group" >> {
-      new MatchSchedule(groupD, "Germany", "Iceland", day1) must
-        throwA(new IllegalArgumentException("requirement failed: Home should be in the group"))
-    }
-
-    "Visitor should be in the group" >> {
-      new MatchSchedule(groupD, "Argentina", "Germany", day1) must
-        throwA(new IllegalArgumentException("requirement failed: Visitor should be in the group"))
-    }
-
-    "Home and visitor should be different teams" >> {
-      new MatchSchedule(groupD, "Argentina", "Argentina", day1) must
-        throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
-    }
   }
 }

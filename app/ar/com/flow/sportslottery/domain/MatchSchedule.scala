@@ -3,7 +3,6 @@ package ar.com.flow.sportslottery.domain
 import java.time.LocalDate
 
 class MatchSchedule(val group: Set[String], val homeTeam: String, val visitorTeam: String, val date: LocalDate) {
-  require(homeTeam != visitorTeam, "Home and visitor should be different teams")
   require(group.contains(homeTeam), "Home should be in the group")
   require(group.contains(visitorTeam), "Visitor should be in the group")
 
