@@ -7,8 +7,8 @@ class GroupsPhaseMetadataTest extends Specification with TestObjects {
 
   "Preconditions" >> {
     "A team can't appear in more than one group" >> {
-      val argentinaIcelandMatch = new MatchSchedule(groupD, "Argentina", "Iceland", day1)
-      val argentinaCroatiaMatch = new MatchSchedule(groupD, "Argentina", "Croatia", day2)
+      val argentinaIcelandMatch = new MatchSchedule("Argentina", "Iceland", day1)
+      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", day2)
 
       val groupA = Group("A", Set(argentinaIcelandMatch))
       val groupB = Group("B", Set(argentinaCroatiaMatch))
@@ -17,8 +17,8 @@ class GroupsPhaseMetadataTest extends Specification with TestObjects {
     }
 
     "A team can't play two matches the same day" >> {
-      val argentinaIcelandMatch = new MatchSchedule(groupD, "Argentina", "Iceland", day1)
-      val argentinaCroatiaMatch = new MatchSchedule(groupD, "Argentina", "Croatia", day1)
+      val argentinaIcelandMatch = new MatchSchedule("Argentina", "Iceland", day1)
+      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", day1)
 
       val group = Group("A", Set(argentinaIcelandMatch, argentinaCroatiaMatch))
 

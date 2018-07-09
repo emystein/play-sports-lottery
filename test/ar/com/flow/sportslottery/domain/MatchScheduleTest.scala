@@ -14,7 +14,7 @@ class MatchScheduleTest extends Specification with TestObjects {
     }
 
     "Assign date as separate year, month, day" >> {
-      val matchEvent = new MatchSchedule(groupD, "Argentina", "Nigeria", 2018, 6, 16)
+      val matchEvent = new MatchSchedule("Argentina", "Nigeria", 2018, 6, 16)
 
       matchEvent.date must be equalTo day3
     }
