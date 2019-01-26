@@ -1,27 +1,29 @@
 package ar.com.flow.sportslottery.domain
 
 import org.specs2.mutable.Specification
+import org.specs2.specification.BeforeEach
 
 import scala.collection.mutable
 
-class GroupsPhaseTest extends Specification with TestObjects {
+class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
   val allSchedules = Set(groupDMatchSchedules, groupAMatchSchedules)
   val groupsPhaseMetadata = new GroupsPhaseMetadata(allSchedules)
+  var phase: GroupsPhase = null
+  var argentinaVsNigeriaMatchSchedule: MatchSchedule = null
+
+  def before = {
+    phase = new GroupsPhase(groupsPhaseMetadata)
+    argentinaVsNigeriaMatchSchedule = phase.metadata.getMatchSchedule("Argentina", "Nigeria").get
+  }
 
   "Match results" >> {
     "Add a match result" >> {
-      val phase = new GroupsPhase(groupsPhaseMetadata)
-
-      val matchSchedule = phase.metadata.getMatchSchedule("Argentina", "Nigeria")
-
-      val matchResult = phase.addMatchResult(matchSchedule.get, 2, 1)
+      val matchResult = phase.addMatchResult(argentinaVsNigeriaMatchSchedule, 2, 1)
 
       phase.matchResults must contain(matchResult)
     }
 
     "Can't add a match result for a match that wasn't scheduled" >> {
-      val phase = new GroupsPhase(groupsPhaseMetadata)
-
       phase.addMatchResult(notWorldCupMatch, 2, 1) must
         throwA(new IllegalArgumentException("requirement failed: Can't add a result for a match that wasn't scheduled"))
     }
@@ -29,26 +31,18 @@ class GroupsPhaseTest extends Specification with TestObjects {
 
   "Pending matches" >> {
     "When the phase begins all matches should be pending" >> {
-      val phase = new GroupsPhase(groupsPhaseMetadata)
-
-      phase.pendingMatches must be equalTo(allSchedules.flatMap(_.matchSchedules).to[mutable.Set])
+      phase.pendingMatches must be equalTo allSchedules.flatMap(_.matchSchedules).to[mutable.Set]
     }
 
     "After playing a match it shouldn't appear as pending" >> {
-      val phase = new GroupsPhase(groupsPhaseMetadata)
+      phase.addMatchResult(argentinaVsNigeriaMatchSchedule, 2, 1)
 
-      val maybeMatchSchedule = phase.metadata.getMatchSchedule("Argentina", "Nigeria")
-
-      phase.addMatchResult(maybeMatchSchedule.get, 2, 1)
-
-      phase.pendingMatches must not contain(maybeMatchSchedule.get)
+      phase.pendingMatches must not contain argentinaVsNigeriaMatchSchedule
     }
   }
 
   "Phase ranking" >> {
     "Add a match result must update both teams rank" >> {
-      val phase = new GroupsPhase(groupsPhaseMetadata)
-
       phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
 
       val groupRanking = phase.getGroupRanking("D")
