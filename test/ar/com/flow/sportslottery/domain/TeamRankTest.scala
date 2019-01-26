@@ -1,5 +1,7 @@
 package ar.com.flow.sportslottery.domain
 
+import java.time.LocalDate
+
 import org.specs2.mutable.Specification
 
 import scala.util.Sorting
@@ -37,8 +39,10 @@ class TeamRankTest extends Specification with TestObjects {
     }
 
     "When teams have same match points then goals difference goes first" >> {
-      val jakartaChinaMatchResult = new MatchResult(HomeTeamScore("Jakarta", 0), VisitorTeamScore("China", 1))
-      val jakartaKamchatkaMatchResult = new MatchResult(HomeTeamScore("Jakarta", 1), VisitorTeamScore("Kamchatka", 3))
+      val jakartaChinaMatchSchedule = new MatchSchedule("Jakarta", "China", LocalDate.of(2018, 1, 1))
+      val jakartaChinaMatchResult = new MatchResult(jakartaChinaMatchSchedule, 0, 1)
+      val jakartaKamchatkaMatchSchedule = new MatchSchedule("Jakarta", "Kamchatka", LocalDate.of(2018, 1, 1))
+      val jakartaKamchatkaMatchResult = new MatchResult(jakartaKamchatkaMatchSchedule, 1, 3)
 
       val chinaRank = new TeamRank("China")
       chinaRank.addMatchResult(jakartaChinaMatchResult)

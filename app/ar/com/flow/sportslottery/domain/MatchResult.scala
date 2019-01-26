@@ -1,19 +1,13 @@
 package ar.com.flow.sportslottery.domain
 
-class MatchResult(val homeScore: TeamScore, val visitorScore: TeamScore)(implicit teamRanks: Map[String, TeamRank] = Map.empty) {
-  require(homeScore.team != visitorScore.team, "Home and visitor should be different teams")
+class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoints: Int)(implicit teamRanks: Map[String, TeamRank] = Map.empty) {
+  val homeScore = HomeTeamScore(matchSchedule.homeTeam, homePoints)
+  val visitorScore = HomeTeamScore(matchSchedule.visitorTeam, visitorPoints)
+  val teamScores = Set(homeScore, visitorScore)
 
-  def this(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int) {// TODO add (implicit teamRanks: Map[String, TeamRank] = Map.empty) {
-    this(HomeTeamScore(matchSchedule.homeTeam, homeScore), VisitorTeamScore(matchSchedule.visitorTeam, visitorScore))() // TODO add (teamRanks)
-  }
-
-  val teams = Set(homeScore.team, visitorScore.team)
-
-  teams.map(team => teamRanks.getOrElse(team, new TeamRank(team))).foreach(rank => rank.addMatchResult(this))
+  matchSchedule.teams.map(team => teamRanks.getOrElse(team, new TeamRank(team))).foreach(rank => rank.addMatchResult(this))
 
   def forTeam: Map[String, TeamMatchResult] = {
-    val teamScores = Set(homeScore, visitorScore)
-
     val result = for {
       teamScore1 <- teamScores
       teamScore2 <- teamScores
@@ -28,7 +22,7 @@ class MatchResult(val homeScore: TeamScore, val visitorScore: TeamScore)(implici
   }
 
   // TODO: review potential duplicated code
-  val winner =
+  val winner = {
     if (homeScore.score == visitorScore.score) {
       None
     } else if (homeScore.score > visitorScore.score) {
@@ -36,4 +30,5 @@ class MatchResult(val homeScore: TeamScore, val visitorScore: TeamScore)(implici
     } else {
       Some(visitorScore.team)
     }
+  }
 }

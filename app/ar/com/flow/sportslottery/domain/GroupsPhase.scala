@@ -15,7 +15,7 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
 
     pendingMatches -= matchSchedule
 
-    val result = new MatchResult(HomeTeamScore(matchSchedule.homeTeam, homeScore), VisitorTeamScore(matchSchedule.visitorTeam, visitorScore))(teamRanks)
+    val result = new MatchResult(matchSchedule, homeScore, visitorScore)(teamRanks)
 
     matchResults += result
 

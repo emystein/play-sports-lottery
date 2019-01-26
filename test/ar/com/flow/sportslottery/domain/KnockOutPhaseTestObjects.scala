@@ -3,19 +3,6 @@ package ar.com.flow.sportslottery.domain
 import java.time.LocalDate
 
 trait KnockOutPhaseTestObjects {
-  val firstRound1Result = new MatchResult(HomeTeamScore("Argentina", 3), VisitorTeamScore("France", 4))
-  val firstRound2Result = new MatchResult(HomeTeamScore("Uruguay", 2), VisitorTeamScore("Portugal", 1))
-
-  val quarterFinalsDate1 = LocalDate.of(2018, 7, 6)
-  val quarterFinalsDate2 = LocalDate.of(2018, 7, 6)
-  val quarterFinalsDate3 = LocalDate.of(2018, 7, 7)
-  val quarterFinalsDate4 = LocalDate.of(2018, 7, 7)
-
-  val semiFinalsDate1 = LocalDate.of(2018, 7, 10)
-  val semiFinalsDate2 = LocalDate.of(2018, 7, 11)
-
-  val finalDate = LocalDate.of(2018, 7, 15)
-
   val uruguayPortugalRoundOf16Match = new MatchSchedule("Uruguay", "Portugal", LocalDate.of(2018, 6, 30))
   val franceArgentinaRoundOf16Match = new MatchSchedule("France", "Argentina", LocalDate.of(2018, 6, 30))
   val brazilMexicoRoundOf16Match = new MatchSchedule("Brazil", "Mexico", LocalDate.of(2018, 7, 2))
@@ -28,4 +15,16 @@ trait KnockOutPhaseTestObjects {
   val roundOf16Schedules = Seq(uruguayPortugalRoundOf16Match, franceArgentinaRoundOf16Match, brazilMexicoRoundOf16Match, belgiumJapanRoundOf16Match,
     spainRussiaRoundOf16Match, croatiaDenmarkRoundOf16Match, swedenSwitzerlandRoundOf16Match, colombiaEnglandRoundOf16Match)
 
+  val firstRound1Result = new MatchResult(franceArgentinaRoundOf16Match, 4, 3)
+  val firstRound2Result = new MatchResult(uruguayPortugalRoundOf16Match, 2, 1)
+
+  val quarterFinalsDate1 = LocalDate.of(2018, 7, 6)
+  val quarterFinalsDate2 = LocalDate.of(2018, 7, 6)
+  val quarterFinalsDate3 = LocalDate.of(2018, 7, 7)
+  val quarterFinalsDate4 = LocalDate.of(2018, 7, 7)
+
+  val semiFinalsDate1 = LocalDate.of(2018, 7, 10)
+  val semiFinalsDate2 = LocalDate.of(2018, 7, 11)
+
+  val finalDate = LocalDate.of(2018, 7, 15)
 }

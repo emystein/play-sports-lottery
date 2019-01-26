@@ -15,10 +15,5 @@ class MatchResultTest extends Specification with TestObjects {
       argentinaIcelandMatchResult.forTeam("Argentina") must be equalTo TeamMatchResult("Argentina", 1, 1)
       argentinaIcelandMatchResult.forTeam("Iceland")  must be equalTo TeamMatchResult("Iceland", 1, 1)
     }
-
-    "Trying to register a result with same home and visitor team should throw an error" >> {
-      new MatchResult(HomeTeamScore("Argentina", 2), VisitorTeamScore("Argentina", 1)) must
-        throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
-    }
   }
 }
