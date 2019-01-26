@@ -20,13 +20,13 @@ class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoin
   val winner = WinnerOf(homeScore, visitorScore)
 }
 
-case class TeamMatchResult(homeScore: TeamScore, visitorScore: TeamScore) {
-  val goalsFavor: Int = homeScore.score
-  val goalsAgainst: Int = visitorScore.score
+case class TeamMatchResult(teamScore: TeamScore, opponentScore: TeamScore) {
+  val goalsFavor: Int = teamScore.score
+  val goalsAgainst: Int = opponentScore.score
 
-  val points = WinnerOf(homeScore, visitorScore) match {
+  val points = WinnerOf(teamScore, opponentScore) match {
     case None => 1
-    case Some(team) => if (team == homeScore.team) 3 else 0
+    case Some(team) => if (team == teamScore.team) 3 else 0
   }
 }
 
