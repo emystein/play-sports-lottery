@@ -49,7 +49,7 @@ trait TestObjects {
   val croatiaNigeriaMatchResult = new MatchResult(HomeTeamScore("Croatia", 2), VisitorTeamScore("Nigeria", 0))()
   val argentinaIcelandMatchResult = new MatchResult(HomeTeamScore("Argentina", 1), VisitorTeamScore("Iceland", 1))()
   val argentinaCroatiaMatchResult = new MatchResult(HomeTeamScore("Argentina", 0), VisitorTeamScore("Croatia", 3))()
-  val argentinaNigeriaMatchResult = new MatchResult(HomeTeamScore("Argentina", 2), VisitorTeamScore("Nigeria", 1))()
+  val argentinaNigeriaMatchResult = new MatchResult(argentinaNigeriaMatch, 2, 1)
   val icelandCroatiaMatchResult = new MatchResult(HomeTeamScore("Iceland", 1), VisitorTeamScore("Croatia", 2))()
 
 
