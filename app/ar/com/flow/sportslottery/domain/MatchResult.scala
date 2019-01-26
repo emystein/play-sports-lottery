@@ -1,6 +1,8 @@
 package ar.com.flow.sportslottery.domain
 
 class MatchResult(val homeScore: TeamScore, val visitorScore: TeamScore)(implicit teamRanks: Map[String, TeamRank] = Map.empty) {
+  require(homeScore.team != visitorScore.team, "Home and visitor should be different teams")
+
   val teams = Set(homeScore.team, visitorScore.team)
 
   teams.map(team => teamRanks.getOrElse(team, new TeamRank(team))).foreach(rank => rank.addMatchResult(this))
@@ -21,6 +23,7 @@ class MatchResult(val homeScore: TeamScore, val visitorScore: TeamScore)(implici
     TeamMatchResult(teamScore.team, teamScore.score, oponentScore.score)
   }
 
+  // TODO: review potential duplicated code
   val winner =
     if (homeScore.score == visitorScore.score) {
       None

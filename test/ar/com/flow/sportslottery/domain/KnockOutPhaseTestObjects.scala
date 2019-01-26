@@ -3,8 +3,8 @@ package ar.com.flow.sportslottery.domain
 import java.time.LocalDate
 
 trait KnockOutPhaseTestObjects {
-  val firstRound1Result = new MatchResult(new TeamScore("Argentina", 3), new TeamScore("France", 4))
-  val firstRound2Result = new MatchResult(new TeamScore("Uruguay", 2), new TeamScore("Portugal", 1))
+  val firstRound1Result = new MatchResult(TeamScore("Argentina", 3), TeamScore("France", 4))
+  val firstRound2Result = new MatchResult(TeamScore("Uruguay", 2), TeamScore("Portugal", 1))
 
   val quarterFinalsDate1 = LocalDate.of(2018, 7, 6)
   val quarterFinalsDate2 = LocalDate.of(2018, 7, 6)
