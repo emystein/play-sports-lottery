@@ -18,5 +18,10 @@ class MatchScheduleTest extends Specification with TestObjects {
 
       matchEvent.date must be equalTo day3
     }
+
+    "Home and visitor should be different teams" >> {
+      new MatchSchedule("Argentina", "Argentina", day1) must
+        throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
+    }
   }
 }
