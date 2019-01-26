@@ -46,11 +46,11 @@ trait TestObjects {
   val icelandCroatiaMatch = new MatchSchedule("Iceland", "Croatia", 2018, 6, 26)
   val groupDMatchSchedules = Group("D", Set(croatiaNigeriaMatch, argentinaIcelandMatch, argentinaCroatiaMatch, argentinaNigeriaMatch))
 
-  val croatiaNigeriaMatchResult = new MatchResult(TeamScore("Croatia", 2), TeamScore("Nigeria", 0))()
-  val argentinaIcelandMatchResult = new MatchResult(TeamScore("Argentina", 1), TeamScore("Iceland", 1))()
-  val argentinaCroatiaMatchResult = new MatchResult(TeamScore("Argentina", 0), TeamScore("Croatia", 3))()
-  val argentinaNigeriaMatchResult = new MatchResult(TeamScore("Argentina", 2), TeamScore("Nigeria", 1))()
-  val icelandCroatiaMatchResult = new MatchResult(TeamScore("Iceland", 1), TeamScore("Croatia", 2))()
+  val croatiaNigeriaMatchResult = new MatchResult(HomeTeamScore("Croatia", 2), VisitorTeamScore("Nigeria", 0))()
+  val argentinaIcelandMatchResult = new MatchResult(HomeTeamScore("Argentina", 1), VisitorTeamScore("Iceland", 1))()
+  val argentinaCroatiaMatchResult = new MatchResult(HomeTeamScore("Argentina", 0), VisitorTeamScore("Croatia", 3))()
+  val argentinaNigeriaMatchResult = new MatchResult(HomeTeamScore("Argentina", 2), VisitorTeamScore("Nigeria", 1))()
+  val icelandCroatiaMatchResult = new MatchResult(HomeTeamScore("Iceland", 1), VisitorTeamScore("Croatia", 2))()
 
 
   val argentinaRank = new TeamRank("Argentina")

@@ -17,7 +17,7 @@ class MatchResultTest extends Specification with TestObjects {
     }
 
     "Trying to register a result with same home and visitor team should throw an error" >> {
-      new MatchResult(TeamScore("Argentina", 2), TeamScore("Argentina", 1)) must
+      new MatchResult(HomeTeamScore("Argentina", 2), VisitorTeamScore("Argentina", 1)) must
         throwA(new IllegalArgumentException("requirement failed: Home and visitor should be different teams"))
     }
   }

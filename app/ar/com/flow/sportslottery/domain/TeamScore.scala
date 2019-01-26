@@ -1,3 +1,9 @@
 package ar.com.flow.sportslottery.domain
 
-case class TeamScore(team: String, score: Int)
+sealed trait TeamScore {
+  val team: String
+  val score: Int
+}
+
+case class HomeTeamScore(team: String, score: Int) extends TeamScore
+case class VisitorTeamScore(team: String, score: Int) extends TeamScore

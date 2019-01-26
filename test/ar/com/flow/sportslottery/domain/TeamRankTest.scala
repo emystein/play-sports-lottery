@@ -37,8 +37,8 @@ class TeamRankTest extends Specification with TestObjects {
     }
 
     "When teams have same match points then goals difference goes first" >> {
-      val jakartaChinaMatchResult = new MatchResult(TeamScore("Jakarta", 0), TeamScore("China", 1))
-      val jakartaKamchatkaMatchResult = new MatchResult(TeamScore("Jakarta", 1), TeamScore("Kamchatka", 3))
+      val jakartaChinaMatchResult = new MatchResult(HomeTeamScore("Jakarta", 0), VisitorTeamScore("China", 1))
+      val jakartaKamchatkaMatchResult = new MatchResult(HomeTeamScore("Jakarta", 1), VisitorTeamScore("Kamchatka", 3))
 
       val chinaRank = new TeamRank("China")
       chinaRank.addMatchResult(jakartaChinaMatchResult)
