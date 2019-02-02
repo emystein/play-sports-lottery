@@ -84,4 +84,5 @@ trait TestObjects {
   val mexicoSwedenMatch = new MatchSchedule("Mexico", "Sweden", 2018, 6, 27)
   val groupF = Group("F", groupFTeams, Set(germanyMexicoMatch, swedenKoreaMatch, koreaMexicoMatch, germanySwedenMatch, koreaGermanyMatch, mexicoSwedenMatch))
 
+  val allGroups = Set(groupA, groupB, groupC, groupD, groupE, groupF)
 }

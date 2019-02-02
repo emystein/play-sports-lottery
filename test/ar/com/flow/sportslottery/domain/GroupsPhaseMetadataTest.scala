@@ -3,22 +3,16 @@ package ar.com.flow.sportslottery.domain
 import org.specs2.mutable.Specification
 
 class GroupsPhaseMetadataTest extends Specification with TestObjects {
-  val allSchedules = Set(groupD, groupA)
-
-  "Preconditions" >> {
+  "GroupsPhase preconditions" >> {
     "A team can't appear in more than one group" >> {
-      val argentinaIcelandMatch = new MatchSchedule("Argentina", "Iceland", day1)
-      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", day2)
-
-      val groupA1 = Group("A", Set("Argentina", "Iceland"), Set(argentinaIcelandMatch))
-      val groupB1= Group("B", Set("Argentina", "Croatia"), Set(argentinaCroatiaMatch))
+      val groupA1 = Group("A", argentinaIcelandMatch.teams, Set(argentinaIcelandMatch))
+      val groupB1 = Group("B", argentinaCroatiaMatch.teams, Set(argentinaCroatiaMatch))
 
       new GroupsPhaseMetadata(Set(groupA1, groupB1)) should throwA(new IllegalArgumentException("requirement failed: A team can't appear in more than one group"))
     }
 
     "A team can't play two matches the same day" >> {
-      val argentinaIcelandMatch = new MatchSchedule("Argentina", "Iceland", day1)
-      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", day1)
+      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", argentinaIcelandMatch.date)
 
       val group = Group("A", Set("Argentina", "Iceland", "Croatia"), Set(argentinaIcelandMatch, argentinaCroatiaMatch, icelandCroatiaMatch))
 
@@ -26,8 +20,8 @@ class GroupsPhaseMetadataTest extends Specification with TestObjects {
     }
   }
 
-  "Match schedules" >> {
-    val phase = new GroupsPhaseMetadata(allSchedules)
+  "GroupsPhase match schedules" >> {
+    val phase = new GroupsPhaseMetadata(allGroups)
 
     "Get a match event given teams in home/visitor order" >> {
       val matchSchedule = phase.getMatchSchedule("Argentina", "Iceland")

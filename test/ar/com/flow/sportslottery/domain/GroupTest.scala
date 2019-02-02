@@ -7,7 +7,7 @@ class GroupPreconditionsTest extends Specification with TestObjects {
     "When all matches are scheduled" >> {
       GroupPreconditions.allTeamsPlayAgainstEachOther(groupATeams, groupA.matchSchedules) should beTrue
     }
-    "When a match is missing" >> {
+    "When a match schedule is missing" >> {
       val matchSchedules = groupA.matchSchedules - russiaSaudiArabiaMatch
       GroupPreconditions.allTeamsPlayAgainstEachOther(groupATeams, matchSchedules) should beFalse
     }

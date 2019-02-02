@@ -41,6 +41,7 @@ class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
     }
   }
 
+  // TODO review this, is failing randomly
   "Phase ranking" >> {
     "Add a match result must update both teams rank" >> {
       phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
