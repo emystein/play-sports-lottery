@@ -18,7 +18,7 @@ trait TestObjects {
   val russiaEgyptMatch = new MatchSchedule("Russia", "Egypt", 2018, 6, 19)
   val uruguayRussiaMatch = new MatchSchedule("Uruguay", "Russia", 2018, 6, 25)
   val saudiArabiaEgyptMatch = new MatchSchedule("Saudi Arabia", "Egypt", 2018, 6, 25)
-  val groupAMatchSchedules = Group("A", Set(russiaSaudiArabiaMatch, egyptUruguayMatch, uruguaySaudiArabiaMatch, russiaEgyptMatch, uruguayRussiaMatch, saudiArabiaEgyptMatch))
+  val groupAMatchSchedules = Group("A", groupA, Set(russiaSaudiArabiaMatch, egyptUruguayMatch, uruguaySaudiArabiaMatch, russiaEgyptMatch, uruguayRussiaMatch, saudiArabiaEgyptMatch))
 
   val groupB = Set("Iran", "Morocco", "Portugal", "Spain")
   val moroccoIranMatch = new MatchSchedule("Morocco", "Iran", 2018, 6, 15)
@@ -27,7 +27,7 @@ trait TestObjects {
   val iranSpainMatch = new MatchSchedule("Iran", "Spain", 2018, 6, 20)
   val spainMoroccoMatch = new MatchSchedule("Spain", "Morocco", 2018, 6, 25)
   val iranPortugalMatch = new MatchSchedule("Iran", "Portugal", 2018, 6, 25)
-  val groupBMatchSchedules = Group("B", Set(moroccoIranMatch, portugalSpainMatch, portugalMoroccoMatch, iranSpainMatch, spainMoroccoMatch, iranPortugalMatch))
+  val groupBMatchSchedules = Group("B", groupB, Set(moroccoIranMatch, portugalSpainMatch, portugalMoroccoMatch, iranSpainMatch, spainMoroccoMatch, iranPortugalMatch))
 
   val groupC = Set("Australia", "Denmark", "France", "Peru")
   val franceAustraliaMatch = new MatchSchedule("France", "Australia", 2018, 6, 16)
@@ -36,20 +36,21 @@ trait TestObjects {
   val francePeruMatch = new MatchSchedule("France", "Peru", 2018, 6, 21)
   val australiaPeruMatch = new MatchSchedule("Australia", "Peru", 2018, 6, 26)
   val denmarkFranceMatch = new MatchSchedule("Denmark", "France", 2018, 6, 26)
-  val groupCMatchSchedules = Group("C", Set(franceAustraliaMatch, peruDenmarkMatch, denmarkAustraliaMatch, francePeruMatch, australiaPeruMatch, denmarkFranceMatch))
+  val groupCMatchSchedules = Group("C", groupC, Set(franceAustraliaMatch, peruDenmarkMatch, denmarkAustraliaMatch, francePeruMatch, australiaPeruMatch, denmarkFranceMatch))
 
   val groupD = Set("Argentina", "Iceland", "Croatia", "Nigeria")
   val argentinaIcelandMatch = new MatchSchedule("Argentina", "Iceland", 2018, 6, 16)
   val croatiaNigeriaMatch = new MatchSchedule("Croatia", "Nigeria", 2018, 6, 16)
   val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", 2018, 6, 21)
-  val argentinaNigeriaMatch = new MatchSchedule("Argentina", "Nigeria", 2018, 6, 26)
+  val nigeriaIcelandMatch = new MatchSchedule("Nigeria", "Iceland", 2018, 6, 22)
+  val nigeriaArgentinaMatch = new MatchSchedule("Nigeria", "Argentina", 2018, 6, 26)
   val icelandCroatiaMatch = new MatchSchedule("Iceland", "Croatia", 2018, 6, 26)
-  val groupDMatchSchedules = Group("D", Set(croatiaNigeriaMatch, argentinaIcelandMatch, argentinaCroatiaMatch, argentinaNigeriaMatch))
+  val groupDMatchSchedules = Group("D", groupD, Set(argentinaIcelandMatch, croatiaNigeriaMatch, argentinaCroatiaMatch, nigeriaIcelandMatch, nigeriaArgentinaMatch, icelandCroatiaMatch))
 
   val croatiaNigeriaMatchResult = new MatchResult(croatiaNigeriaMatch, 2, 0)
   val argentinaIcelandMatchResult = new MatchResult(argentinaIcelandMatch, 1, 1)
   val argentinaCroatiaMatchResult = new MatchResult(argentinaCroatiaMatch, 0, 3)
-  val argentinaNigeriaMatchResult = new MatchResult(argentinaNigeriaMatch, 2, 1)
+  val argentinaNigeriaMatchResult = new MatchResult(nigeriaArgentinaMatch, 1, 2)
   val icelandCroatiaMatchResult = new MatchResult(icelandCroatiaMatch, 1, 2)
 
 
@@ -72,7 +73,7 @@ trait TestObjects {
   val serbiaSwitzerlandMatch = new MatchSchedule("Serbia", "Switzerland", 2018, 6, 22)
   val serbiaBrazilMatch = new MatchSchedule("Serbia", "Brazil", 2018, 6, 27)
   val switzerlandCostaRicaMatch = new MatchSchedule("Switzerland", "Costa Rica", 2018, 6, 27)
-  val groupEMatchSchedules = Group("E", Set(costaRicaSerbiaMatch, BrazilSwitzerlandMatch, BrazilCostaRicaMatch, serbiaSwitzerlandMatch, serbiaBrazilMatch, switzerlandCostaRicaMatch))
+  val groupEMatchSchedules = Group("E", groupE, Set(costaRicaSerbiaMatch, BrazilSwitzerlandMatch, BrazilCostaRicaMatch, serbiaSwitzerlandMatch, serbiaBrazilMatch, switzerlandCostaRicaMatch))
 
   val groupF = Set("Sweden", "Mexico", "Korea", "Germany")
   val germanyMexicoMatch = new MatchSchedule("Germany", "Mexico", 2018, 6, 17)
@@ -81,6 +82,6 @@ trait TestObjects {
   val germanySwedenMatch = new MatchSchedule("Germany", "Sweden", 2018, 6, 23)
   val koreaGermanyMatch = new MatchSchedule("Korea", "Germany", 2018, 6, 27)
   val mexicoSwedenMatch = new MatchSchedule("Mexico", "Sweden", 2018, 6, 27)
-  val groupFMatchSchedules = Group("F", Set(germanyMexicoMatch, swedenKoreaMatch, koreaMexicoMatch, germanySwedenMatch, koreaGermanyMatch, mexicoSwedenMatch))
+  val groupFMatchSchedules = Group("F", groupF, Set(germanyMexicoMatch, swedenKoreaMatch, koreaMexicoMatch, germanySwedenMatch, koreaGermanyMatch, mexicoSwedenMatch))
 
 }

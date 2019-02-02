@@ -6,8 +6,8 @@ class MatchResultTest extends Specification with TestObjects {
   "Match result" >> {
     "Register a win" >> {
       argentinaNigeriaMatchResult.winner must be equalTo Some("Argentina")
-      argentinaNigeriaMatchResult.forTeam("Argentina") must be equalTo TeamMatchResult(HomeTeamScore("Argentina", 2), VisitorTeamScore("Nigeria", 1))
-      argentinaNigeriaMatchResult.forTeam("Nigeria") must be equalTo TeamMatchResult(VisitorTeamScore("Nigeria", 1), HomeTeamScore("Argentina", 2))
+      argentinaNigeriaMatchResult.forTeam("Nigeria") must be equalTo TeamMatchResult(HomeTeamScore("Nigeria", 1), VisitorTeamScore("Argentina", 2))
+      argentinaNigeriaMatchResult.forTeam("Argentina") must be equalTo TeamMatchResult(VisitorTeamScore("Argentina", 2), HomeTeamScore("Nigeria", 1))
     }
 
     "Register a deuce" >> {
