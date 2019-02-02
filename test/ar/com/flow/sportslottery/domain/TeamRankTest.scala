@@ -14,19 +14,15 @@ class TeamRankTest extends Specification with TestObjects {
       throwA(new IllegalArgumentException("requirement failed: Match result should correspond to team"))
   }
 
-  "Sum match results" >> {
+  "Sum matches results" >> {
     val argentinaRank = new TeamRank("Argentina")
 
-    argentinaRank.addMatchResult(argentinaIcelandMatchResult)
-    argentinaRank.addMatchResult(argentinaCroatiaMatchResult)
-    argentinaRank.addMatchResult(argentinaNigeriaMatchResult)
+    val matchesResults = Seq(argentinaIcelandMatchResult, argentinaCroatiaMatchResult, argentinaNigeriaMatchResult)
 
-    val argentinaPoints = argentinaIcelandMatchResult.forTeam("Argentina").points +
-                          argentinaCroatiaMatchResult.forTeam("Argentina").points +
-                          argentinaNigeriaMatchResult.forTeam("Argentina").points
+    matchesResults.foreach(argentinaRank.addMatchResult)
 
-    argentinaRank.matchesPlayed must be equalTo 3
-    argentinaRank.points must be equalTo argentinaPoints
+    argentinaRank.matchesPlayed must be equalTo matchesResults.size
+    argentinaRank.points must be equalTo matchesResults.map(_.forTeam("Argentina")).map(_.points).sum
   }
 
   "Order" >> {
