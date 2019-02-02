@@ -5,11 +5,11 @@ import org.specs2.mutable.Specification
 class GroupPreconditionsTest extends Specification with TestObjects {
   "Verify all teams plays against each other" >> {
     "When all matches are scheduled" >> {
-      GroupPreconditions.allTeamsPlayAgainstEachOther(groupA, groupAMatchSchedules.matchSchedules) should beTrue
+      GroupPreconditions.allTeamsPlayAgainstEachOther(groupATeams, groupAMatchSchedules.matchSchedules) should beTrue
     }
     "When a match is missing" >> {
       val matchSchedules = groupAMatchSchedules.matchSchedules - russiaSaudiArabiaMatch
-      GroupPreconditions.allTeamsPlayAgainstEachOther(groupA, matchSchedules) should beFalse
+      GroupPreconditions.allTeamsPlayAgainstEachOther(groupATeams, matchSchedules) should beFalse
     }
   }
 }
@@ -19,7 +19,7 @@ class GroupTest extends Specification with TestObjects {
     "When a match is missing" >> {
       val matchSchedules = groupAMatchSchedules.matchSchedules - russiaSaudiArabiaMatch
 
-      Group("A", groupA, matchSchedules) should
+      Group("A", groupATeams, matchSchedules) should
         throwA(new IllegalArgumentException("requirement failed: all teams must play against each other"))
     }
   }

@@ -5,9 +5,9 @@ import org.specs2.mutable.Specification
 class MatchResultTest extends Specification with TestObjects {
   "Match result" >> {
     "Register a win" >> {
-      argentinaNigeriaMatchResult.winner must be equalTo Some("Argentina")
-      argentinaNigeriaMatchResult.forTeam("Nigeria") must be equalTo TeamMatchResult(HomeTeamScore("Nigeria", 1), VisitorTeamScore("Argentina", 2))
-      argentinaNigeriaMatchResult.forTeam("Argentina") must be equalTo TeamMatchResult(VisitorTeamScore("Argentina", 2), HomeTeamScore("Nigeria", 1))
+      nigeriaArgentinaMatchResult.winner must be equalTo Some("Argentina")
+      nigeriaArgentinaMatchResult.forTeam("Nigeria") must be equalTo TeamMatchResult(HomeTeamScore("Nigeria", 1), VisitorTeamScore("Argentina", 2))
+      nigeriaArgentinaMatchResult.forTeam("Argentina") must be equalTo TeamMatchResult(VisitorTeamScore("Argentina", 2), HomeTeamScore("Nigeria", 1))
     }
 
     "Register a deuce" >> {

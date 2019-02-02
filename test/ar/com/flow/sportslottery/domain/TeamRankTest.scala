@@ -17,7 +17,7 @@ class TeamRankTest extends Specification with TestObjects {
   "Sum matches results" >> {
     val argentinaRank = new TeamRank("Argentina")
 
-    val matchesResults = Seq(argentinaIcelandMatchResult, argentinaCroatiaMatchResult, argentinaNigeriaMatchResult)
+    val matchesResults = Seq(argentinaIcelandMatchResult, argentinaCroatiaMatchResult, nigeriaArgentinaMatchResult)
 
     matchesResults.foreach(argentinaRank.addMatchResult)
 
