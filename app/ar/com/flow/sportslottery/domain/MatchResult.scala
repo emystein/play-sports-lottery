@@ -20,13 +20,36 @@ class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoin
   val winner = WinnerOf(homeScore, visitorScore)
 }
 
-case class TeamMatchResult(teamScore: TeamScore, opponentScore: TeamScore) {
+trait TeamMatchPoints {
+  val goalsFavor: Int
+  val goalsAgainst: Int
+  val points: Int
+}
+
+case class TeamMatchResult(teamScore: TeamScore, opponentScore: TeamScore) extends TeamMatchPoints {
   val goalsFavor: Int = teamScore.score
   val goalsAgainst: Int = opponentScore.score
 
   val points = WinnerOf(teamScore, opponentScore) match {
     case None => 1
     case Some(team) => if (team == teamScore.team) 3 else 0
+  }
+}
+
+// TODO convert to Monoid
+case object ZeroMatchPoints extends TeamMatchPoints {
+  override val goalsFavor: Int = 0
+  override val goalsAgainst: Int = 0
+  override val points: Int = 0
+}
+
+object SumMatchPoints {
+  def apply(one: TeamMatchPoints, other: TeamMatchPoints) = {
+    new TeamMatchPoints {
+      override val goalsFavor: Int = one.goalsFavor + other.goalsFavor
+      override val goalsAgainst: Int = one.goalsAgainst + other.goalsAgainst
+      override val points: Int = one.points + other.points
+    }
   }
 }
 

@@ -1,22 +1,21 @@
 package ar.com.flow.sportslottery.domain
 
-import scala.collection.mutable
-
 class TeamRank(val team: String) extends Ordered[TeamRank] {
-  var teamResults = mutable.MutableList[TeamMatchResult]()
-  def matchesPlayed: Int = teamResults.size
-  def goalsFavor: Int = teamResults.map(_.goalsFavor).sum
-  def goalsAgainst: Int = teamResults.map(_.goalsAgainst).sum
-  def points: Int = teamResults.map(_.points).sum
+  private var totals: TeamMatchPoints = ZeroMatchPoints
+
+  var matchesPlayed: Int = 0
+  def goalsFavor: Int = totals.goalsFavor
+  def goalsAgainst: Int = totals.goalsAgainst
+  def points: Int = totals.points
+  def goalDifference = goalsFavor - goalsAgainst
 
   def addMatchResult(matchResult: MatchResult) {
     require(matchResult.matchSchedule.teams.contains(team), "Match result should correspond to team")
-    teamResults += matchResult.forTeam(team)
+    matchesPlayed += 1
+    totals = SumMatchPoints(totals, matchResult.forTeam(team))
   }
 
   def compare(other: TeamRank): Int = {
-    val goalDifference = goalsFavor - goalsAgainst
-    val otherGoalDifference = other.goalsFavor - other.goalsAgainst
-    ((points + goalDifference) compare (other.points + otherGoalDifference)) * -1
+    ((points + goalDifference) compare (other.points + other.goalDifference)) * -1
   }
 }
