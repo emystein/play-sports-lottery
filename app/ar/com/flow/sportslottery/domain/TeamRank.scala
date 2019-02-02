@@ -6,8 +6,8 @@ class TeamRank(val team: String) extends Ordered[TeamRank] {
   var matchesPlayed: Int = 0
   def goalsFavor: Int = totals.goalsFavor
   def goalsAgainst: Int = totals.goalsAgainst
+  def goalDifference : Int = totals.goalDifference
   def points: Int = totals.points
-  def goalDifference = goalsFavor - goalsAgainst
 
   def addMatchResult(matchResult: MatchResult) {
     require(matchResult.matchSchedule.teams.contains(team), "Match result should correspond to team")
@@ -16,6 +16,6 @@ class TeamRank(val team: String) extends Ordered[TeamRank] {
   }
 
   def compare(other: TeamRank): Int = {
-    ((points + goalDifference) compare (other.points + other.goalDifference)) * -1
+    (totals compare other.totals) * -1
   }
 }
