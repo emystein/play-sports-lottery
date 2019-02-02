@@ -3,7 +3,7 @@ package ar.com.flow.sportslottery.domain
 import org.specs2.mutable.Specification
 
 class GroupsPhaseMetadataTest extends Specification with TestObjects {
-  val allSchedules = Set(groupDMatchSchedules, groupAMatchSchedules)
+  val allSchedules = Set(groupD, groupA)
 
   "Preconditions" >> {
     "A team can't appear in more than one group" >> {
