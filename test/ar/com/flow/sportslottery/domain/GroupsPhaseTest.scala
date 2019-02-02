@@ -6,7 +6,6 @@ import org.specs2.specification.BeforeEach
 import scala.collection.mutable
 
 class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
-  val groupsPhaseMetadata =  new GroupsPhaseMetadata(allGroups)
   var phase: GroupsPhase = null
 
   def before = {

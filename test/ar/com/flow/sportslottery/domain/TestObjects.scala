@@ -85,4 +85,5 @@ trait TestObjects {
   val groupF = Group("F", groupFTeams, Set(germanyMexicoMatch, swedenKoreaMatch, koreaMexicoMatch, germanySwedenMatch, koreaGermanyMatch, mexicoSwedenMatch))
 
   val allGroups = Set(groupA, groupB, groupC, groupD, groupE, groupF)
+  val groupsPhaseMetadata =  new GroupsPhaseMetadata(allGroups)
 }
