@@ -4,7 +4,7 @@ import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
 class GroupsPhase(val metadata: GroupsPhaseMetadata) {
-  val teamRanks = metadata.teams.map(team => team -> new TeamRank(team)).toMap
+  val groupsRanking = GroupsRanking(metadata)
 
   // mutable
   val pendingMatches: mutable.Set[MatchSchedule] = metadata.scheduledMatches.to[mutable.Set]
@@ -15,15 +15,13 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
 
     pendingMatches -= matchSchedule
 
-    val result = new MatchResult(matchSchedule, homeScore, visitorScore)(teamRanks)
+    val result = new MatchResult(matchSchedule, homeScore, visitorScore)
+
+    groupsRanking.add(result)
 
     matchResults += result
 
     result
-  }
-
-  def getGroupRanking(groupName: String): List[TeamRank] = {
-    metadata.teamsByGroup(groupName).map(teamRanks(_)).toList.sorted
   }
 }
 

@@ -1,11 +1,9 @@
 package ar.com.flow.sportslottery.domain
 
-class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoints: Int)(implicit teamRanks: Map[String, TeamRank] = Map.empty) {
+class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoints: Int) {
   val homeScore = HomeTeamScore(matchSchedule.homeTeam, homePoints)
   val visitorScore = VisitorTeamScore(matchSchedule.visitorTeam, visitorPoints)
   val teamScores = Set(homeScore, visitorScore)
-
-  matchSchedule.teams.map(team => teamRanks.getOrElse(team, new TeamRank(team))).foreach(rank => rank.addMatchResult(this))
 
   def forTeam: Map[String, TeamMatchResult] = {
     val result = for {

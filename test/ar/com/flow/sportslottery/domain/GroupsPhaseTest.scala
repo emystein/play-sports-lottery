@@ -45,7 +45,7 @@ class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
     "Add a match result must update both teams rank" >> {
       phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
 
-      val groupRanking = phase.getGroupRanking("D")
+      val groupRanking = phase.groupsRanking.getGroupRanking("D")
 
       groupRanking.map(_.team) must be equalTo List("Croatia", "Argentina", "Iceland", "Nigeria")
     }
