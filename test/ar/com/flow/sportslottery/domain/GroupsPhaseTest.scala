@@ -6,19 +6,28 @@ import org.specs2.specification.BeforeEach
 import scala.collection.mutable
 
 class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
-  val allSchedules = Set(groupD, groupA)
-  val groupsPhaseMetadata = new GroupsPhaseMetadata(allSchedules)
+  val groupsPhaseMetadata =  new GroupsPhaseMetadata(allGroups)
   var phase: GroupsPhase = null
-  var argentinaVsNigeriaMatchSchedule: MatchSchedule = null
 
   def before = {
     phase = new GroupsPhase(groupsPhaseMetadata)
-    argentinaVsNigeriaMatchSchedule = phase.metadata.getMatchSchedule("Argentina", "Nigeria").get
+  }
+
+  "Pending matches" >> {
+    "When the phase begins all matches should be pending" >> {
+      phase.pendingMatches must be equalTo allGroups.flatMap(_.matchSchedules).to[mutable.Set]
+    }
+
+    "After playing a match it shouldn't appear as pending" >> {
+      phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
+
+      phase.pendingMatches must not contain nigeriaArgentinaMatch
+    }
   }
 
   "Match results" >> {
     "Add a match result" >> {
-      val matchResult = phase.addMatchResult(argentinaVsNigeriaMatchSchedule, 2, 1)
+      val matchResult = phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
 
       phase.matchResults must contain(matchResult)
     }
@@ -26,18 +35,6 @@ class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
     "Can't add a match result for a match that wasn't scheduled" >> {
       phase.addMatchResult(notWorldCupMatch, 2, 1) must
         throwA(new IllegalArgumentException("requirement failed: Can't add a result for a match that wasn't scheduled"))
-    }
-  }
-
-  "Pending matches" >> {
-    "When the phase begins all matches should be pending" >> {
-      phase.pendingMatches must be equalTo allSchedules.flatMap(_.matchSchedules).to[mutable.Set]
-    }
-
-    "After playing a match it shouldn't appear as pending" >> {
-      phase.addMatchResult(argentinaVsNigeriaMatchSchedule, 2, 1)
-
-      phase.pendingMatches must not contain argentinaVsNigeriaMatchSchedule
     }
   }
 
