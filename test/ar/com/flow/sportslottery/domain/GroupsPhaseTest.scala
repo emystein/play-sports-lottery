@@ -37,10 +37,11 @@ class GroupsPhaseTest extends Specification with BeforeEach with TestObjects {
     }
   }
 
-  // TODO review this, is failing randomly
   "Phase ranking" >> {
     "Add a match result must update both teams rank" >> {
       phase.addMatchResult(croatiaNigeriaMatch, 2, 0)
+      // TODO investigate why without registering this result the ranking sometimes differs from the expected
+      phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
 
       val groupRanking = phase.groupsRanking.getGroupRanking("D")
 
