@@ -1,6 +1,6 @@
 package ar.com.flow.sportslottery.domain
 
-class MatchResult(val matchSchedule: MatchSchedule, homePoints: Int, visitorPoints: Int) {
+case class MatchResult(matchSchedule: MatchSchedule, homePoints: Int, visitorPoints: Int) {
   val homeScore = HomeTeamScore(matchSchedule.homeTeam, homePoints)
   val visitorScore = VisitorTeamScore(matchSchedule.visitorTeam, visitorPoints)
   val teamScores = Set(homeScore, visitorScore)

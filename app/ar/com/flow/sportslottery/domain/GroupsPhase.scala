@@ -4,23 +4,15 @@ import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
 class GroupsPhase(val metadata: GroupsPhaseMetadata) {
-  val groupsRanking = GroupsRanking(metadata)
-
-  // mutable
-  val pendingMatches: mutable.Set[MatchSchedule] = metadata.scheduledMatches.to[mutable.Set]
-  val matchResults: MutableList[MatchResult] = MutableList.empty
+  val matchPlayLog: MatchPlayLog = MatchPlayLog(metadata.scheduledMatches)
+  val pendingMatches: mutable.Set[MatchSchedule] = matchPlayLog.pendingMatches
+  val matchResults: mutable.MutableList[MatchResult] = matchPlayLog.matchResults
+  val groupsRanking: GroupsRanking = GroupsRanking(metadata)
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): MatchResult = {
     require(metadata.matchHasBeenScheduled(matchSchedule), "Can't add a result for a match that wasn't scheduled")
-
-    pendingMatches -= matchSchedule
-
-    val result = new MatchResult(matchSchedule, homeScore, visitorScore)
-
+    val result = matchPlayLog.addResult(matchSchedule, homeScore, visitorScore)
     groupsRanking.add(result)
-
-    matchResults += result
-
     result
   }
 }

@@ -10,7 +10,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
       phase.pendingMatches must containTheSameElementsAs(allGroups.flatMap(_.matchSchedules).toSeq)
     }
 
-    "After playing a match then it should not appear as pending" >> {
+    "After playing a match then it should removed from pending" >> {
       val phase = new GroupsPhase(groupsPhaseMetadata)
 
       phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
@@ -19,8 +19,8 @@ class GroupsPhaseTest extends Specification with TestObjects {
     }
   }
 
-  "Match results" >> {
-    "Add a match result" >> {
+  "Match results in group phase" >> {
+    "When adding a match result then it should appear in phase results" >> {
       val phase = new GroupsPhase(groupsPhaseMetadata)
 
       val matchResult = phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
@@ -32,7 +32,7 @@ class GroupsPhaseTest extends Specification with TestObjects {
       val phase = new GroupsPhase(groupsPhaseMetadata)
 
       phase.addMatchResult(notWorldCupMatch, 2, 1) must
-        throwA(new IllegalArgumentException("requirement failed: Can't add a result for a match that wasn't scheduled"))
+        throwA(PreconditionFailed("Can't add a result for a match that wasn't scheduled"))
     }
   }
 
