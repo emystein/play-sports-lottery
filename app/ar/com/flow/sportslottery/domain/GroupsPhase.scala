@@ -16,4 +16,3 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
     result
   }
 }
-

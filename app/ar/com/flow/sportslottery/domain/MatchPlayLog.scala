@@ -7,8 +7,8 @@ case class MatchPlayLog(scheduledMatches: Set[MatchSchedule]) {
   val matchResults: mutable.MutableList[MatchResult] = mutable.MutableList.empty
 
   def addResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int) = {
+    pendingMatches -= matchSchedule
     val result = new MatchResult(matchSchedule, homeScore, visitorScore)
-    pendingMatches -= result.matchSchedule
     matchResults += result
     result
   }
