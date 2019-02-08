@@ -38,11 +38,18 @@ class GroupsPhaseTest extends Specification with TestObjects {
       phase.pendingMatches must not contain nigeriaArgentinaMatch
     }
 
-    "Can't add a match result for a match that wasn't scheduled" >> {
+    "Can't add a result for a match that wasn't scheduled" >> {
       val phase = new GroupsPhase(groupsPhaseMetadata)
 
       phase.addMatchResult(notWorldCupMatch, 2, 1) must
         throwA(PreconditionFailed("Can't add a result for a match that wasn't scheduled"))
+    }
+
+    "Can't add a result for a match which has a result already registered" >> {
+      val phase = new GroupsPhase(groupsPhaseMetadata)
+      phase.addMatchResult(nigeriaArgentinaMatch, 1, 2)
+      phase.addMatchResult(nigeriaArgentinaMatch, 1, 2) must
+        throwA(new IllegalArgumentException("requirement failed: Can't add a result for a match which has a result already registered"))
     }
   }
 

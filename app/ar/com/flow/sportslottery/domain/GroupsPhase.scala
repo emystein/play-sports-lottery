@@ -12,6 +12,7 @@ class GroupsPhase(val metadata: GroupsPhaseMetadata) {
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): MatchResult = {
     require(metadata.matchHasBeenScheduled(matchSchedule), "Can't add a result for a match that wasn't scheduled")
+    require(pendingMatches.contains(matchSchedule), "Can't add a result for a match which has a result already registered")
     val result = matchPlayLog.addResult(matchSchedule, homeScore, visitorScore)
     groupsRanking.addMatchResult(result)
     result
