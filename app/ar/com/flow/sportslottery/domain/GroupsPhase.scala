@@ -3,7 +3,7 @@ package ar.com.flow.sportslottery.domain
 import scala.collection.mutable
 import scala.collection.mutable.MutableList
 
-class GroupsPhase(val metadata: GroupsPhaseMetadata) {
+case class GroupsPhase(val metadata: GroupsPhaseMetadata) {
   val matchPlayLog: MatchPlayLog = MatchPlayLog(metadata.scheduledMatches)
   val pendingMatches: mutable.Set[MatchSchedule] = matchPlayLog.pendingMatches
   val matchResults: mutable.MutableList[MatchResult] = matchPlayLog.matchResults
