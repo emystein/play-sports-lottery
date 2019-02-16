@@ -5,7 +5,7 @@ import org.specs2.mutable.Specification
 class GroupRankingTest extends Specification with TestObjects {
   "GroupRanking" >> {
     "must order teams after adding match result" >> {
-      val ranking = GroupsRanking(groupsPhaseMetadata)
+      val ranking = GroupsRanking(Set(groupD))
 
       ranking.addMatchResult(croatiaNigeriaMatch, 2, 0)
       ranking.addMatchResult(nigeriaArgentinaMatch, 1, 2)

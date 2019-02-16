@@ -1,6 +1,7 @@
 package ar.com.flow.sportslottery.domain
 
-import java.time.{LocalDate, MonthDay}
+import java.time.Month.JULY
+import java.time.{LocalDate, MonthDay, YearMonth}
 import java.util.Calendar
 
 trait TestObjects {
@@ -86,4 +87,13 @@ trait TestObjects {
 
   val allGroups = Set(groupA, groupB, groupC, groupD, groupE, groupF)
   val groupsPhaseMetadata =  new GroupsPhaseMetadata(allGroups)
+
+
+  val franceBelgiumSemisMatch = MatchSchedule("France", "Belgium", LocalDate.of(2018, JULY, 10))
+  val croatiaEnglandSemisMatch = MatchSchedule("France", "Belgium", LocalDate.of(2018, JULY, 11))
+  // TODO move precondition of all teams playing against each other to collaborator object of Group
+//  val semisGroup = Group("Semis", Set("France", "Belgium", "Croatia", "England"), Set(franceBelgiumSemisMatch, croatiaEnglandSemisMatch))
+
+  val finalMatch = MatchSchedule("France", "Croatia", LocalDate.of(2018, JULY, 15))
+//  val finalGroup = Group("Finals", Set("France", "Croatia"), Set(finalMatch))
 }

@@ -7,10 +7,6 @@ case class GroupsRanking(groups: Set[Group]) {
     addMatchResult(new MatchResult(matchSchedule, homeScore, visitorScore))
   }
 
-  def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): Unit = {
-    addMatchResult(new MatchResult(matchSchedule, homeScore, visitorScore))
-  }
-
   def addMatchResult(matchResult: MatchResult) = {
     matchResult.matchSchedule.teams
       .map(team => teamRanks.getOrElse(team, new TeamRank(team)))
