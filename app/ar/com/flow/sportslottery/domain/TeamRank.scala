@@ -16,6 +16,6 @@ class TeamRank(val team: String) extends Ordered[TeamRank] {
   }
 
   def compare(other: TeamRank): Int = {
-    (totals compare other.totals) * -1 // multiply by -1 to sort in descending order
+    ((totals.points + goalDifference) compare (other.totals.points + other.goalDifference)) * -1 // multiply by -1 to sort in descending order
   }
 }
