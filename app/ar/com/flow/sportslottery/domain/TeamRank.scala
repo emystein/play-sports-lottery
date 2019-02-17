@@ -10,7 +10,7 @@ case class TeamRank(team: String) extends Ordered[TeamRank] {
   def points: Int = totals.points
 
   def addMatchResult(matchResult: MatchResult) {
-    require(matchResult.matchSchedule.teams.contains(team), "Match result should correspond to team")
+    require(matchResult.teams.contains(team), "Match result should correspond to team")
     matchesPlayed += 1
     totals = SumMatchPoints(totals, matchResult.forTeam(team))
   }
