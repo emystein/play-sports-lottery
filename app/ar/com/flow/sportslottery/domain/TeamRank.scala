@@ -1,6 +1,6 @@
 package ar.com.flow.sportslottery.domain
 
-class TeamRank(val team: String) extends Ordered[TeamRank] {
+case class TeamRank(team: String) extends Ordered[TeamRank] {
   private var totals: TeamMatchPoints = ZeroMatchPoints
 
   var matchesPlayed: Int = 0

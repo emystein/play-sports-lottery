@@ -1,10 +1,10 @@
 package ar.com.flow.sportslottery.domain
 
-case class GroupsRanking(groups: Set[Group]) {
+case class GroupsRanking(groups: Set[Group]) extends GroupedTeams {
   val groupRanking = groups.map(group => group -> GroupRanking(group)).toMap
 
   def addMatchResult(matchSchedule: MatchSchedule, homeScore: Int, visitorScore: Int): Unit = {
-    addMatchResult(new MatchResult(matchSchedule, homeScore, visitorScore))
+    addMatchResult(MatchResult(matchSchedule, homeScore, visitorScore))
   }
 
   def addMatchResult(matchResult: MatchResult) = {
@@ -16,14 +16,5 @@ case class GroupsRanking(groups: Set[Group]) {
 
   def getGroupRanking(group: Group): GroupRanking = {
     groupRanking(group)
-  }
-
-  private val teamGroup: Map[String, Group] = {
-    (for {
-      group <- groups
-      team <- group.teams
-    } yield {
-      team -> group
-    }).toMap
   }
 }
