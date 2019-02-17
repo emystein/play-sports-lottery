@@ -2,8 +2,7 @@ package ar.com.flow.sportslottery.domain
 
 import ar.com.flow.sportslottery.domain.GroupsPhasePreconditions.{onlyOneGroupForEachTeam, onlyOneMatchPerDayForEachTeam}
 
-case class GroupsPhaseMetadata(groups: Set[Group]) {
-  val teamsByGroup = groups.map(g => g.name -> g.matchSchedules.flatMap(_.teams)).toMap
+case class GroupsPhaseMetadata(groups: Set[Group]) extends GroupedTeams {
   val teams = teamsByGroup.values.flatten
   val scheduledMatches: Set[MatchSchedule] = groups.flatMap(_.matchSchedules)
 
