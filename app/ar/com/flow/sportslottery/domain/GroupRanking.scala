@@ -9,7 +9,7 @@ case class GroupRanking(group: Group) {
 
   def addMatchResult(matchResult: MatchResult) = {
     matchResult.teams
-      .map(team => teamRanks(team))
+      .map(teamRanks)
       .foreach(rank => rank.addMatchResult(matchResult))
   }
 
