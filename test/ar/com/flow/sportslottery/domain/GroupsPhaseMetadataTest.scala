@@ -8,15 +8,24 @@ class GroupsPhaseMetadataTest extends Specification with TestObjects {
       val groupA1 = Group("A", argentinaIcelandMatch.teams, Set(argentinaIcelandMatch))
       val groupB1 = Group("B", argentinaCroatiaMatch.teams, Set(argentinaCroatiaMatch))
 
-      new GroupsPhaseMetadata(Set(groupA1, groupB1)) should throwA(PreconditionFailed("A team can't appear in more than one group"))
+      GroupsPhaseMetadata(Set(groupA1, groupB1)) should throwA(PreconditionFailed("A team can't appear in more than one group"))
     }
 
     "A team can't play two matches the same day" >> {
-      val argentinaCroatiaMatch = new MatchSchedule("Argentina", "Croatia", argentinaIcelandMatch.date)
+      val argentinaCroatiaMatch = MatchSchedule("Argentina", "Croatia", argentinaIcelandMatch.date)
 
       val group = Group("A", Set("Argentina", "Iceland", "Croatia"), Set(argentinaIcelandMatch, argentinaCroatiaMatch, icelandCroatiaMatch))
 
-      new GroupsPhaseMetadata(Set(group)) should throwA(PreconditionFailed("A team can't play two matches the same day"))
+      GroupsPhaseMetadata(Set(group)) should throwA(PreconditionFailed("A team can't play two matches the same day"))
+    }
+
+    "All teams in a group plays against each other" >> {
+      "When a match is missing" >> {
+        val matchSchedules = groupA.matchSchedules - russiaSaudiArabiaMatch
+
+        GroupsPhaseMetadata(Set(Group("A", groupATeams, matchSchedules))) should
+          throwA(new IllegalArgumentException("requirement failed: all teams must play against each other"))
+      }
     }
   }
 
