@@ -4,7 +4,6 @@ import ar.com.flow.sportslottery.domain.GroupPreconditions.allTeamsPlayAgainstEa
 import ar.com.flow.sportslottery.domain.GroupsPhasePreconditions.{onlyOneGroupForEachTeam, onlyOneMatchPerDayForEachTeam}
 
 case class GroupsPhaseMetadata(groups: Set[Group]) extends GroupedTeams {
-  val teams = teamsByGroup.values.flatten.toSet
   val scheduledMatches: Set[MatchSchedule] = groups.flatMap(_.matchSchedules)
 
   require(onlyOneMatchPerDayForEachTeam(scheduledMatches), "A team can't play two matches the same day")
