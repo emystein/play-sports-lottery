@@ -17,7 +17,7 @@ object GroupsPhasePreconditions {
       if teams1 != teams2
     } yield (teams1, teams2)
 
-    teamsPairs.forall(tp => tp._1.intersect(tp._2) == Set.empty)
+    teamsPairs.forall{case (pair1, pair2) => pair1.intersect(pair2).isEmpty}
   }
 
   def allTeamsInAGroupPlayAgainstEachOther(teams: Set[String], matchSchedules: Set[MatchSchedule]): Boolean = {
