@@ -5,6 +5,16 @@ import java.time.LocalDate
 import org.specs2.mutable.Specification
 
 class GroupsPhaseTest extends Specification with TestObjects {
+  "Verify all teams plays against each other within a group" >> {
+    "When all matches are scheduled" >> {
+      GroupsPhasePreconditions.allTeamsInAGroupPlayAgainstEachOther(groupATeams, groupA.matchSchedules) should beTrue
+    }
+    "When a match schedule is missing" >> {
+      val matchSchedules = groupA.matchSchedules - russiaSaudiArabiaMatch
+      GroupsPhasePreconditions.allTeamsInAGroupPlayAgainstEachOther(groupATeams, matchSchedules) should beFalse
+    }
+  }
+
   "Groups phase start" >> {
     "all matches should be pending" >> {
       val phase = GroupsPhase(groupsPhaseMetadata)
