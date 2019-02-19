@@ -20,7 +20,7 @@ object GroupsPhasePreconditions {
     teamsPairs.forall(tp => tp._1.intersect(tp._2) == Set.empty)
   }
 
-  def allTeamsWithinAGroupPlayAgainstEachOther(teams: Set[String], matchSchedules: Set[MatchSchedule]): Boolean = {
+  def allTeamsInAGroupPlayAgainstEachOther(teams: Set[String], matchSchedules: Set[MatchSchedule]): Boolean = {
     twoSidedTeamPairs(matchSchedules) == cartesianPairs(teams)
   }
 
