@@ -14,5 +14,7 @@ case class GroupRanking(group: Group) {
   }
 
   def teamOrder: List[String] = teamRanks.values.toList.sorted.map(_.team)
+
+  def teamInPosition(position: Int): String = teamOrder(position)
 }
 
